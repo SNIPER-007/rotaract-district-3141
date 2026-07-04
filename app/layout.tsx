@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
-import { Providers } from "./providers";
+import { Caveat, Inter } from "next/font/google";
+import { Providers } from "@/components/common/providers";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const interSans = Inter({
+  variable: "--font-inter-variable",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const caveatScript = Caveat({
+  variable: "--font-caveat-variable",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -52,7 +59,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme="light"
-      className={`${geistSans.variable} h-full antialiased`}
+      className={`${interSans.variable} ${caveatScript.variable} h-full antialiased`}
     >
       <body className="min-h-full">
         <Providers>{children}</Providers>

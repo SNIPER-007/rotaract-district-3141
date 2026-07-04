@@ -13,12 +13,11 @@ interface NavbarProps {
 }
 
 const NAV_ITEMS = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Impact", href: "#impact" },
-  { label: "Team", href: "#team" },
-  { label: "Events", href: "#events" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Leadership", href: "/about#leadership" },
+  { label: "Events", href: "/#featured-events" },
+  { label: "Contact", href: "/#contact" },
 ] as const;
 
 function useLogoProximity(mouseX: number, mouseY: number, logoRef: RefObject<HTMLAnchorElement | null>) {

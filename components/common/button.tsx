@@ -8,8 +8,10 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: "bg-[var(--foreground)] text-[var(--background)]",
-  secondary: "bg-transparent text-[var(--foreground)] border border-current",
+  primary:
+    "bg-[var(--foreground)] text-[var(--background)] shadow-[0_14px_32px_rgba(17,17,17,0.14)] hover:shadow-[0_18px_40px_rgba(17,17,17,0.18)]",
+  secondary:
+    "bg-transparent text-[var(--foreground)] border border-[color-mix(in_srgb,var(--foreground)_18%,transparent)]",
   ghost: "bg-transparent text-[var(--foreground)]",
 };
 
@@ -22,7 +24,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = [
-    "inline-flex items-center justify-center rounded-[var(--radius)] px-[var(--space-4)] py-[var(--space-2)] transition-[background-color,color,border-color,opacity] duration-[var(--transition)]",
+    "inline-flex items-center justify-center rounded-[var(--radius)] px-[calc(var(--space-4)+0.25rem)] py-[calc(var(--space-2)+0.125rem)] transition-[background-color,color,border-color,opacity,box-shadow,transform] duration-[220ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
     variantClasses[variant],
     disabled ? "cursor-not-allowed opacity-50" : "",
     className,

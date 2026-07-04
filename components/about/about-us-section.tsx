@@ -25,7 +25,6 @@ export function AboutUsSection() {
   const paragraphRef = useRef<HTMLParagraphElement>(null);
   const statCardRefs = useRef<Array<HTMLDivElement | null>>([]);
   const portraitRef = useRef<HTMLDivElement>(null);
-  const quoteRef = useRef<HTMLQuoteElement>(null);
   const hasCountedRef = useRef(false);
   const prefersReducedMotion = useReducedMotion();
   const [displayCounts, setDisplayCounts] = useState<string[]>(() =>
@@ -65,9 +64,8 @@ export function AboutUsSection() {
       const paragraph = paragraphRef.current;
       const statCards = statCardRefs.current.filter(Boolean);
       const portrait = portraitRef.current;
-      const quote = quoteRef.current;
 
-      if (!headingLines.length || !paragraph || !statCards.length || !portrait || !quote) {
+      if (!headingLines.length || !paragraph || !statCards.length || !portrait) {
         return;
       }
 
@@ -122,15 +120,6 @@ export function AboutUsSection() {
           },
         },
       );
-
-      fadeStep(timeline, quote, {
-        at: overlapStep(0.08),
-        duration: 0.28,
-        fromOpacity: 0,
-        toOpacity: 1,
-        fromY: 14,
-        toY: 0,
-      });
     }, section);
 
     const countTrigger = ScrollTrigger.create({
@@ -286,18 +275,13 @@ export function AboutUsSection() {
                     <p className="text-[0.72rem] font-medium uppercase tracking-[0.26em] text-[var(--foreground)]/56">
                       {ABOUT_US_CONTENT.representative.designation}
                     </p>
+                    <p className="pt-2 text-[0.96rem] leading-[1.7] text-[var(--foreground)]/72">
+                      {ABOUT_US_CONTENT.representative.welcomeMessage}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-
-            <blockquote
-              ref={quoteRef}
-              data-about-quote="true"
-              className="rounded-[1.5rem] border border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_84%,transparent)] p-5 text-[1rem] leading-[1.7] text-[var(--foreground)]/74 shadow-[var(--shadow-sm)] backdrop-blur-xl sm:p-6"
-            >
-              {ABOUT_US_CONTENT.representative.quote}
-            </blockquote>
           </div>
         </div>
       </Container>

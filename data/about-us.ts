@@ -12,7 +12,7 @@ export interface AboutUsContent {
   representative: {
     name: string;
     designation: string;
-    quote: string;
+    welcomeMessage: string;
     portraitLabel: string;
   };
 }
@@ -29,7 +29,7 @@ export const ABOUT_US_CONTENT: AboutUsContent = {
     "Rotaract District 3141 connects clubs, leaders, and communities across a shared commitment to service, fellowship, and long-term impact. The district exists to support meaningful action, strengthen leadership, and create a trusted platform for Rotaractors to grow together.",
   stats: [
     {
-      label: "Years of Impact",
+      label: "Years",
       value: 11,
       suffix: "+",
     },
@@ -39,19 +39,19 @@ export const ABOUT_US_CONTENT: AboutUsContent = {
       suffix: "+",
     },
     {
-      label: "Rotaractors",
+      label: "Rotaract Clubs",
       value: null,
     },
     {
-      label: "Clubs",
+      label: "Rotaractors",
       value: null,
     },
   ],
   representative: {
     name: "PHF. RTR. Shree Hari Nair",
     designation: "District Rotaract Representative 2026–27",
-    quote:
-      "[Replace with a short DRR message that reflects leadership, service, and continuity for the district.]",
+    welcomeMessage:
+      "Welcome to Rotaract District 3141. Together, we will strengthen fellowship, serve our communities, and build continuity through meaningful leadership.",
     portraitLabel: "District Rotaract Representative Portrait",
   },
 };

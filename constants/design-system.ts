@@ -1,6 +1,6 @@
 export const COLOR_TOKENS = {
   light: {
-    background: "#FAF8F5",
+    background: "#F8F7F4",
     foreground: "#111111",
     surface: "#FFFFFF",
     surfaceMuted: "#F3EEE6",
