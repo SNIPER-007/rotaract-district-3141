@@ -21,11 +21,7 @@ const NAV_ITEMS = [
   { label: "Contact", href: "#contact" },
 ] as const;
 
-function useLogoProximity(
-  mouseX: number,
-  mouseY: number,
-  logoRef: RefObject<HTMLAnchorElement | null>,
-) {
+function useLogoProximity(mouseX: number, mouseY: number, logoRef: RefObject<HTMLAnchorElement | null>) {
   const [isNear, setIsNear] = useState(false);
 
   useEffect(() => {
@@ -41,18 +37,12 @@ function useLogoProximity(
       const centerY = bounds.top + bounds.height / 2;
       const distance = Math.hypot(mouseX - centerX, mouseY - centerY);
 
-      setIsNear(distance < 132);
+      setIsNear(distance < 100);
     };
 
-    updateProximity();
+    const frame = window.requestAnimationFrame(updateProximity);
 
-    window.addEventListener("scroll", updateProximity, { passive: true });
-    window.addEventListener("resize", updateProximity, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", updateProximity);
-      window.removeEventListener("resize", updateProximity);
-    };
+    return () => window.cancelAnimationFrame(frame);
   }, [logoRef, mouseX, mouseY]);
 
   return isNear;
@@ -88,8 +78,9 @@ export function Navbar({ mouseX, mouseY, isScrolled }: NavbarProps) {
           ref={logoRef}
           href="#home"
           aria-label="Rotaract District 3141 home"
-          className="inline-flex h-11 w-20 items-center justify-center border border-[var(--border)] bg-[var(--foreground)] text-[var(--background)] shadow-[var(--shadow-xs)] outline-none transition-[box-shadow]"
+          className="inline-flex h-11 w-20 items-center justify-center border border-[var(--border)] bg-[var(--foreground)] text-[var(--background)] shadow-[var(--shadow-xs)] outline-none transition-[background-color,color,border-radius,box-shadow]"
           data-cursor-logo="true"
+          data-cursor-logo-proximity={isNearLogo ? "true" : undefined}
           style={{
             borderRadius: isNearLogo ? "1.35rem" : "0.8rem",
           }}

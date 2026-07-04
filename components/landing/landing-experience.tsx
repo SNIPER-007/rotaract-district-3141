@@ -17,8 +17,6 @@ import {
   staggerStep,
 } from "@/lib/scroll-story";
 
-gsap.registerPlugin(ScrollTrigger);
-
 function useViewport() {
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
 

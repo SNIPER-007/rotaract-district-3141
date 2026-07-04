@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import { SPRINGS } from "@/constants/animation";
 import { useMousePosition } from "@/hooks/useMousePosition";
 
@@ -15,11 +15,13 @@ interface CursorProps {
 
 const INTERACTIVE_SELECTOR = {
   logo: '[data-cursor-logo="true"]',
+  logoProximity: '[data-cursor-logo-proximity="true"]',
+  heroHeading: '[data-cursor-hero-heading="true"]',
   sticker: '[data-cursor-sticker="true"]',
   button: '[data-cursor-button="true"]',
 } as const;
 
-type CursorMode = "default" | "button" | "logo" | "sticker";
+type CursorMode = "default" | "button" | "logo" | "hero" | "sticker";
 
 export function Cursor({
   className = "",
@@ -30,44 +32,61 @@ export function Cursor({
   const { mouseX, mouseY } = useMousePosition();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const smoothX = useSpring(x, SPRINGS.cursor);
-  const smoothY = useSpring(y, SPRINGS.cursor);
   const [mode, setMode] = useState<CursorMode>("default");
 
   useEffect(() => {
-    x.set(mouseX - size / 2);
-    y.set(mouseY - size / 2);
-  }, [mouseX, mouseY, size, x, y]);
+    x.set(mouseX);
+    y.set(mouseY);
+  }, [mouseX, mouseY, x, y]);
 
   useEffect(() => {
-    const handlePointerMove = (event: PointerEvent) => {
-      const target = event.target as Element | null;
+    const previousHtmlCursor = document.documentElement.style.cursor;
+    const previousBodyCursor = document.body.style.cursor;
 
+    document.documentElement.style.cursor = "none";
+    document.body.style.cursor = "none";
+
+    return () => {
+      document.documentElement.style.cursor = previousHtmlCursor;
+      document.body.style.cursor = previousBodyCursor;
+    };
+  }, []);
+
+  useEffect(() => {
+    const resolveMode = (target: Element | null) => {
       if (!target) {
-        setMode("default");
-        return;
+        return "default";
       }
 
-      if (target.closest(INTERACTIVE_SELECTOR.logo)) {
-        setMode("logo");
-        return;
+      if (target.closest(INTERACTIVE_SELECTOR.heroHeading)) {
+        return "hero";
+      }
+
+      if (target.closest(INTERACTIVE_SELECTOR.logoProximity) || target.closest(INTERACTIVE_SELECTOR.logo)) {
+        return "logo";
       }
 
       if (target.closest(INTERACTIVE_SELECTOR.sticker)) {
-        setMode("sticker");
-        return;
+        return "sticker";
       }
 
       if (target.closest(INTERACTIVE_SELECTOR.button)) {
-        setMode("button");
-        return;
+        return "button";
       }
 
-      setMode("default");
+      return "default";
+    };
+
+    const handlePointerMove = (event: PointerEvent) => {
+      setMode((currentMode) => {
+        const nextMode = resolveMode(event.target as Element | null);
+
+        return currentMode === nextMode ? currentMode : nextMode;
+      });
     };
 
     const handlePointerLeave = () => {
-      setMode("default");
+      setMode((currentMode) => (currentMode === "default" ? currentMode : "default"));
     };
 
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
@@ -81,6 +100,15 @@ export function Cursor({
 
   const cursorState = useMemo(() => {
     switch (mode) {
+      case "hero":
+        return {
+          width: 64,
+          height: 64,
+          borderRadius: 20,
+          scale: 1,
+          opacity: 1,
+          rotate: 0,
+        };
       case "logo":
         return {
           width: 18,
@@ -110,15 +138,15 @@ export function Cursor({
         };
       default:
         return {
-          width: 12,
-          height: 12,
+          width: size,
+          height: size,
           borderRadius: 9999,
           scale: 1,
           opacity: 1,
           rotate: 0,
         };
     }
-  }, [mode]);
+  }, [mode, size]);
 
   if (hidden) {
     return null;
@@ -131,10 +159,10 @@ export function Cursor({
       animate={cursorState}
       transition={SPRINGS.cursor}
       style={{
-        x: smoothX,
-        y: smoothY,
-        width: size,
-        height: size,
+        x,
+        y,
+        translateX: "-50%",
+        translateY: "-50%",
         backgroundColor: "var(--foreground)",
         mixBlendMode: blendMode,
         opacity: cursorState.opacity,

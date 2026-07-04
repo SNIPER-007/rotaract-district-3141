@@ -187,8 +187,12 @@ export function Hero({
         >
           <Container className="relative py-18 sm:py-22 lg:py-26">
             <div className="relative mx-auto flex max-w-6xl flex-col items-center text-center">
-              <motion.div variants={childVariants} className="relative z-[3]" data-scroll-story-heading="true">
-                <h1 className="font-heading text-[clamp(3.8rem,11vw,8.7rem)] font-bold uppercase leading-[0.9] tracking-[-0.06em] text-[var(--foreground)] text-balance sm:text-[clamp(4.5rem,10vw,9.5rem)]">
+              <motion.div
+                variants={childVariants}
+                className="relative z-[3]"
+                data-scroll-story-heading="true"
+              >
+                <h1 className="font-heading text-[clamp(3.8rem,11vw,8.7rem)] font-bold uppercase leading-[0.9] tracking-[-0.06em] text-[var(--foreground)] text-balance sm:text-[clamp(4.5rem,10vw,9.5rem)]" data-cursor-hero-heading="true">
                   <span className="block">Rotaract</span>
                   <span className="block">District 3141</span>
                 </h1>
