@@ -1,8 +1,7 @@
 "use client";
 
 import type { ButtonHTMLAttributes } from "react";
-
-type ButtonVariant = "primary" | "secondary" | "ghost";
+import type { ButtonVariant } from "@/types/design-system";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
@@ -32,7 +31,13 @@ export function Button({
     .join(" ");
 
   return (
-    <button type={type} className={classes} disabled={disabled} {...props}>
+    <button
+      type={type}
+      className={classes}
+      disabled={disabled}
+      data-cursor-button="true"
+      {...props}
+    >
       {children}
     </button>
   );

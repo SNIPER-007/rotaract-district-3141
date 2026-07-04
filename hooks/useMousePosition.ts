@@ -19,7 +19,7 @@ export function useMousePosition(): MousePositionState {
     isMoving: false,
   });
   const lastPositionRef = useRef({ x: 0, y: 0, timestamp: 0 });
-  const idleTimerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const idleTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const handlePointerMove = (event: PointerEvent) => {

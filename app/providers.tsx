@@ -1,13 +1,13 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { AnimationProvider } from "@/components/common/animation-provider";
+import { ScrollProvider } from "@/components/common/scroll-provider";
 import { LenisProvider } from "@/components/common/lenis-provider";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <AnimationProvider>
+    <ScrollProvider>
       <LenisProvider>{children}</LenisProvider>
-    </AnimationProvider>
+    </ScrollProvider>
   );
 }

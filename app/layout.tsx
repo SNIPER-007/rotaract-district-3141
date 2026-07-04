@@ -49,7 +49,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      data-theme="light"
+      className={`${geistSans.variable} h-full antialiased`}
+    >
       <body className="min-h-full">
         <Providers>{children}</Providers>
       </body>

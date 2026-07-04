@@ -2,6 +2,7 @@
 
 import type { CSSProperties, ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import type { TargetAndTransition, Variants } from "framer-motion";
 import { ANIMATION_DURATIONS, ANIMATION_EASING } from "@/constants/animation";
 
 type RevealVariant = "fade" | "slide" | "scale";
@@ -17,7 +18,7 @@ interface ScrollRevealProps {
   amount?: number;
 }
 
-const variants: Record<RevealVariant, { hidden: object; visible: object }> = {
+const variants: Record<RevealVariant, { hidden: TargetAndTransition; visible: TargetAndTransition }> = {
   fade: {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
@@ -59,6 +60,10 @@ export function ScrollReveal({
     animation === "slide"
       ? { opacity: 0, y: distance }
       : variants[animation].hidden;
+  const motionVariants: Variants = {
+    hidden: hiddenVariant,
+    visible: variants[animation].visible,
+  };
 
   return (
     <motion.div
@@ -66,10 +71,7 @@ export function ScrollReveal({
       initial="hidden"
       whileInView="visible"
       viewport={{ once, amount }}
-      variants={{
-        hidden: hiddenVariant,
-        visible: variants[animation].visible,
-      }}
+      variants={motionVariants}
       transition={transition}
       style={style}
     >

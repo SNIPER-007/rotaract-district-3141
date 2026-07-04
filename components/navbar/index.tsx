@@ -1,3 +1,131 @@
-export default function Navbar() {
-  return null;
+"use client";
+
+import type { RefObject } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { SPRINGS } from "@/constants/animation";
+import { Container } from "@/components/common/container";
+
+interface NavbarProps {
+  mouseX: number;
+  mouseY: number;
+  isScrolled: boolean;
 }
+
+const NAV_ITEMS = [
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Impact", href: "#impact" },
+  { label: "Team", href: "#team" },
+  { label: "Events", href: "#events" },
+  { label: "Contact", href: "#contact" },
+] as const;
+
+function useLogoProximity(
+  mouseX: number,
+  mouseY: number,
+  logoRef: RefObject<HTMLAnchorElement | null>,
+) {
+  const [isNear, setIsNear] = useState(false);
+
+  useEffect(() => {
+    const updateProximity = () => {
+      const logoElement = logoRef.current;
+
+      if (!logoElement) {
+        return;
+      }
+
+      const bounds = logoElement.getBoundingClientRect();
+      const centerX = bounds.left + bounds.width / 2;
+      const centerY = bounds.top + bounds.height / 2;
+      const distance = Math.hypot(mouseX - centerX, mouseY - centerY);
+
+      setIsNear(distance < 132);
+    };
+
+    updateProximity();
+
+    window.addEventListener("scroll", updateProximity, { passive: true });
+    window.addEventListener("resize", updateProximity, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", updateProximity);
+      window.removeEventListener("resize", updateProximity);
+    };
+  }, [logoRef, mouseX, mouseY]);
+
+  return isNear;
+}
+
+export function Navbar({ mouseX, mouseY, isScrolled }: NavbarProps) {
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  const isNearLogo = useLogoProximity(mouseX, mouseY, logoRef);
+
+  const shellStyle = useMemo(
+    () => ({
+      backgroundColor: isScrolled
+        ? "color-mix(in srgb, var(--background) 88%, white 12%)"
+        : "transparent",
+      backdropFilter: isScrolled ? "blur(18px) saturate(1.2)" : "blur(0px)",
+      WebkitBackdropFilter: isScrolled ? "blur(18px) saturate(1.2)" : "blur(0px)",
+      boxShadow: isScrolled ? "var(--shadow-xs)" : "none",
+      borderBottomColor: isScrolled ? "var(--border)" : "transparent",
+    }),
+    [isScrolled],
+  );
+
+  return (
+    <motion.header
+      className="sticky top-0 z-[var(--z-sticky)] border-b border-transparent"
+      style={shellStyle}
+      initial={false}
+      animate={{ y: 0 }}
+      transition={SPRINGS.soft}
+    >
+      <Container className="flex h-20 items-center gap-4">
+        <motion.a
+          ref={logoRef}
+          href="#home"
+          aria-label="Rotaract District 3141 home"
+          className="inline-flex h-11 w-20 items-center justify-center border border-[var(--border)] bg-[var(--foreground)] text-[var(--background)] shadow-[var(--shadow-xs)] outline-none transition-[box-shadow]"
+          data-cursor-logo="true"
+          style={{
+            borderRadius: isNearLogo ? "1.35rem" : "0.8rem",
+          }}
+          animate={{
+            backgroundColor: isNearLogo ? "var(--background)" : "var(--foreground)",
+            color: isNearLogo ? "var(--foreground)" : "var(--background)",
+            rotate: isNearLogo ? 2 : 0,
+            scale: isNearLogo ? 1.05 : 1,
+          }}
+          transition={SPRINGS.snappy}
+        >
+          <span className="text-[0.7rem] font-semibold tracking-[0.32em]">RD</span>
+        </motion.a>
+
+        <nav className="flex flex-1 justify-center overflow-x-auto">
+          <ul className="flex items-center gap-2 whitespace-nowrap px-2 text-[0.82rem] font-medium text-[var(--foreground)]/78 md:gap-4 lg:gap-6">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.label}>
+                <motion.a
+                  href={item.href}
+                  className="relative inline-flex items-center rounded-full px-3 py-2 transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--selection)]"
+                  data-cursor-button="true"
+                  whileHover={{ y: -1 }}
+                  transition={SPRINGS.soft}
+                >
+                  {item.label}
+                </motion.a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="hidden w-20 md:block" aria-hidden="true" />
+      </Container>
+    </motion.header>
+  );
+}
+
+export default Navbar;

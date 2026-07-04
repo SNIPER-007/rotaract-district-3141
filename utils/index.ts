@@ -40,7 +40,7 @@ export function throttle<TArgs extends unknown[]>(
   wait: number,
 ) {
   let lastExecution = 0;
-  let timeoutId: ReturnType<typeof window.setTimeout> | undefined;
+  let timeoutId: number | undefined;
 
   return (...args: TArgs) => {
     const now = Date.now();
@@ -71,7 +71,7 @@ export function debounce<TArgs extends unknown[]>(
   fn: (...args: TArgs) => void,
   wait: number,
 ) {
-  let timeoutId: ReturnType<typeof window.setTimeout> | undefined;
+  let timeoutId: number | undefined;
 
   return (...args: TArgs) => {
     if (timeoutId) {
