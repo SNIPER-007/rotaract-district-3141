@@ -10,6 +10,7 @@ interface NavbarProps {
   mouseX: number;
   mouseY: number;
   isScrolled: boolean;
+  compact?: boolean;
 }
 
 const NAV_ITEMS = [
@@ -47,7 +48,7 @@ function useLogoProximity(mouseX: number, mouseY: number, logoRef: RefObject<HTM
   return isNear;
 }
 
-export function Navbar({ mouseX, mouseY, isScrolled }: NavbarProps) {
+export function Navbar({ mouseX, mouseY, isScrolled, compact = false }: NavbarProps) {
   const logoRef = useRef<HTMLAnchorElement>(null);
   const isNearLogo = useLogoProximity(mouseX, mouseY, logoRef);
 
@@ -72,12 +73,12 @@ export function Navbar({ mouseX, mouseY, isScrolled }: NavbarProps) {
       animate={{ y: 0 }}
       transition={SPRINGS.soft}
     >
-      <Container className="flex h-20 items-center gap-4">
+      <Container className={`flex items-center gap-3 ${compact ? "h-16" : "h-20"}`}>
         <motion.a
           ref={logoRef}
           href="#home"
           aria-label="Rotaract District 3141 home"
-          className="inline-flex h-11 w-20 items-center justify-center border border-[var(--border)] bg-[var(--foreground)] text-[var(--background)] shadow-[var(--shadow-xs)] outline-none transition-[background-color,color,border-radius,box-shadow]"
+          className={`inline-flex items-center justify-center border border-[var(--border)] bg-[var(--foreground)] text-[var(--background)] shadow-[var(--shadow-xs)] outline-none transition-[background-color,color,border-radius,box-shadow] ${compact ? "h-9 w-16" : "h-11 w-20"}`}
           data-cursor-logo="true"
           data-cursor-logo-proximity={isNearLogo ? "true" : undefined}
           style={{
@@ -91,16 +92,16 @@ export function Navbar({ mouseX, mouseY, isScrolled }: NavbarProps) {
           }}
           transition={SPRINGS.snappy}
         >
-          <span className="text-[0.7rem] font-semibold tracking-[0.32em]">RD</span>
+          <span className={`font-semibold tracking-[0.32em] ${compact ? "text-[0.62rem]" : "text-[0.7rem]"}`}>RD</span>
         </motion.a>
 
         <nav className="flex flex-1 justify-center overflow-x-auto">
-          <ul className="flex items-center gap-2 whitespace-nowrap px-2 text-[0.82rem] font-medium text-[var(--foreground)]/78 md:gap-4 lg:gap-6">
+          <ul className={`flex items-center whitespace-nowrap px-2 font-medium text-[var(--foreground)]/78 ${compact ? "gap-1.5 text-[0.75rem] md:gap-3 lg:gap-4" : "gap-2 text-[0.82rem] md:gap-4 lg:gap-6"}`}>
             {NAV_ITEMS.map((item) => (
               <li key={item.label}>
                 <motion.a
                   href={item.href}
-                  className="relative inline-flex items-center rounded-full px-3 py-2 transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--selection)]"
+                  className={`relative inline-flex items-center rounded-full transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--selection)] ${compact ? "px-2.5 py-1.5" : "px-3 py-2"}`}
                   data-cursor-button="true"
                   whileHover={{ y: -1 }}
                   transition={SPRINGS.soft}
@@ -112,7 +113,7 @@ export function Navbar({ mouseX, mouseY, isScrolled }: NavbarProps) {
           </ul>
         </nav>
 
-        <div className="hidden w-20 md:block" aria-hidden="true" />
+        <div className={`${compact ? "hidden w-12 md:block" : "hidden w-20 md:block"}`} aria-hidden="true" />
       </Container>
     </motion.header>
   );

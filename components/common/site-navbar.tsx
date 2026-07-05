@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { Navbar } from "@/components/navbar";
 import { useMousePosition } from "@/hooks/useMousePosition";
 
-export function SiteNavbar() {
+interface SiteNavbarProps {
+  compact?: boolean;
+}
+
+export function SiteNavbar({ compact = false }: SiteNavbarProps) {
   const { mouseX, mouseY } = useMousePosition();
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -20,5 +24,5 @@ export function SiteNavbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return <Navbar mouseX={mouseX} mouseY={mouseY} isScrolled={isScrolled} />;
+  return <Navbar mouseX={mouseX} mouseY={mouseY} isScrolled={isScrolled} compact={compact} />;
 }

@@ -1,11 +1,5 @@
-import Footer from "@/components/footer";
-import { AboutPage } from "@/components/about/about-page";
+import { AboutPage } from "@/components/about/page";
 
 export default function AboutRoute() {
-  return (
-    <>
-      <AboutPage />
-      <Footer />
-    </>
-  );
+  return <AboutPage />;
 }

@@ -65,9 +65,24 @@ export function VisionSection() {
               <h2 className="max-w-[20ch] font-heading text-[clamp(3.25rem,6.3vw,5rem)] font-extrabold uppercase leading-[0.92] tracking-[-0.05em] text-[var(--foreground)] text-balance">
                 A District Built Around People.
               </h2>
-              <p className="max-w-[520px] text-[clamp(0.98rem,1.1vw,1.04rem)] leading-[1.8] text-[var(--foreground)]/70 text-balance">
+              <p className="max-w-[560px] text-[clamp(0.98rem,1.1vw,1.04rem)] leading-[1.85] text-[var(--foreground)]/70 text-balance">
                 Rotaract District 3141 empowers young leaders through service, fellowship, and meaningful community impact.
+                We create spaces where clubs can collaborate, members can grow with confidence, and every project can leave a clear public value.
               </p>
+              <div className="grid gap-3 pt-1 sm:grid-cols-3">
+                <div className="rounded-[22px] border border-[rgba(0,0,0,0.05)] bg-white px-4 py-4 shadow-[0_14px_28px_rgba(0,0,0,0.04)]">
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--foreground)]/44">Leadership</p>
+                  <p className="mt-2 text-[0.88rem] leading-[1.65] text-[var(--foreground)]/68">Practical mentorship, clearer direction, and opportunities to step into responsibility.</p>
+                </div>
+                <div className="rounded-[22px] border border-[rgba(0,0,0,0.05)] bg-white px-4 py-4 shadow-[0_14px_28px_rgba(0,0,0,0.04)]">
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--foreground)]/44">Service</p>
+                  <p className="mt-2 text-[0.88rem] leading-[1.65] text-[var(--foreground)]/68">Projects designed to meet real needs with consistency, empathy, and measurable outcomes.</p>
+                </div>
+                <div className="rounded-[22px] border border-[rgba(0,0,0,0.05)] bg-white px-4 py-4 shadow-[0_14px_28px_rgba(0,0,0,0.04)]">
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--foreground)]/44">Fellowship</p>
+                  <p className="mt-2 text-[0.88rem] leading-[1.65] text-[var(--foreground)]/68">A stronger district culture built on trust, shared effort, and long-term connection.</p>
+                </div>
+              </div>
             </div>
           </div>
 
