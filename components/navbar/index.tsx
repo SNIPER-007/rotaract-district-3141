@@ -3,6 +3,7 @@
 import type { RefObject } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { SPRINGS } from "@/constants/animation";
 import { Container } from "@/components/common/container";
 
@@ -16,9 +17,9 @@ interface NavbarProps {
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Leadership", href: "/about#leadership" },
-  { label: "Events", href: "/#featured-events" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Leadership", href: "/leadership" },
+  { label: "Events", href: "/events" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 function useLogoProximity(mouseX: number, mouseY: number, logoRef: RefObject<HTMLAnchorElement | null>) {
@@ -50,6 +51,7 @@ function useLogoProximity(mouseX: number, mouseY: number, logoRef: RefObject<HTM
 
 export function Navbar({ mouseX, mouseY, isScrolled, compact = false }: NavbarProps) {
   const logoRef = useRef<HTMLAnchorElement>(null);
+  const pathname = usePathname();
   const isNearLogo = useLogoProximity(mouseX, mouseY, logoRef);
 
   const shellStyle = useMemo(
@@ -76,7 +78,7 @@ export function Navbar({ mouseX, mouseY, isScrolled, compact = false }: NavbarPr
       <Container className={`flex items-center gap-3 ${compact ? "h-16" : "h-20"}`}>
         <motion.a
           ref={logoRef}
-          href="#home"
+          href="/"
           aria-label="Rotaract District 3141 home"
           className={`inline-flex items-center justify-center border border-[var(--border)] bg-[var(--foreground)] text-[var(--background)] shadow-[var(--shadow-xs)] outline-none transition-[background-color,color,border-radius,box-shadow] ${compact ? "h-9 w-16" : "h-11 w-20"}`}
           data-cursor-logo="true"
@@ -99,15 +101,22 @@ export function Navbar({ mouseX, mouseY, isScrolled, compact = false }: NavbarPr
           <ul className={`flex items-center whitespace-nowrap px-2 font-medium text-[var(--foreground)]/78 ${compact ? "gap-1.5 text-[0.75rem] md:gap-3 lg:gap-4" : "gap-2 text-[0.82rem] md:gap-4 lg:gap-6"}`}>
             {NAV_ITEMS.map((item) => (
               <li key={item.label}>
-                <motion.a
-                  href={item.href}
-                  className={`relative inline-flex items-center rounded-full transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--selection)] ${compact ? "px-2.5 py-1.5" : "px-3 py-2"}`}
-                  data-cursor-button="true"
-                  whileHover={{ y: -1 }}
-                  transition={SPRINGS.soft}
-                >
-                  {item.label}
-                </motion.a>
+                {(() => {
+                  const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
+
+                  return (
+                    <motion.a
+                      href={item.href}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`relative inline-flex items-center rounded-full transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--selection)] ${compact ? "px-2.5 py-1.5" : "px-3 py-2"} ${isActive ? "bg-[color-mix(in_srgb,var(--accent)_8%,white)] text-[var(--foreground)] shadow-[0_10px_22px_rgba(0,87,255,0.08)]" : ""}`}
+                      data-cursor-button="true"
+                      whileHover={{ y: -1 }}
+                      transition={SPRINGS.soft}
+                    >
+                      {item.label}
+                    </motion.a>
+                  );
+                })()}
               </li>
             ))}
           </ul>

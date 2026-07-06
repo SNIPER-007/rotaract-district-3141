@@ -3,9 +3,9 @@ import { Container } from "@/components/common/container";
 const QUICK_LINKS = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
-  { label: "Leadership", href: "/about#leadership" },
-  { label: "Events", href: "#featured-events" },
-  { label: "Contact", href: "#contact" },
+  { label: "Leadership", href: "/leadership" },
+  { label: "Events", href: "/events" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 const SOCIAL_LINKS = ["Instagram", "Facebook", "LinkedIn"] as const;
 
