@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="QR placeholder">
+  <rect width="512" height="512" rx="48" fill="#fff"/>
+  <rect x="48" y="48" width="128" height="128" rx="20" fill="#111"/>
+  <rect x="84" y="84" width="56" height="56" rx="12" fill="#fff"/>
+  <rect x="336" y="48" width="128" height="128" rx="20" fill="#111"/>
+  <rect x="372" y="84" width="56" height="56" rx="12" fill="#fff"/>
+  <rect x="48" y="336" width="128" height="128" rx="20" fill="#111"/>
+  <rect x="84" y="372" width="56" height="56" rx="12" fill="#fff"/>
+  <rect x="224" y="224" width="48" height="48" rx="10" fill="#111"/>
+  <rect x="288" y="224" width="48" height="48" rx="10" fill="#111"/>
+  <rect x="224" y="288" width="48" height="48" rx="10" fill="#111"/>
+  <rect x="352" y="224" width="48" height="48" rx="10" fill="#111"/>
+  <rect x="288" y="352" width="48" height="48" rx="10" fill="#111"/>
+</svg>

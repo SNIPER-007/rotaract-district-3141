@@ -1,0 +1,1 @@
+export { MemberCard as LeaderCard } from "./MemberCard";

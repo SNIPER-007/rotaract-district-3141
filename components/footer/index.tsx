@@ -5,7 +5,7 @@ const QUICK_LINKS = [
   { label: "About", href: "#about" },
   { label: "Leadership", href: "/leadership" },
   { label: "Events", href: "/events" },
-  { label: "Contact", href: "/contact" },
+  { label: "Crowdfunding", href: "/crowdfunding" },
 ] as const;
 const SOCIAL_LINKS = ["Instagram", "Facebook", "LinkedIn"] as const;
 

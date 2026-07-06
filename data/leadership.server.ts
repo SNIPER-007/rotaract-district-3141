@@ -162,6 +162,8 @@ export function loadLeadershipPageData(): LeadershipPageData {
     ...toMember(drrRow, "District Executive Committee"),
     name: "PHF. RTR. Shreehari Nair",
     tenure: "2026–27",
+    bio: "Shreehari Nair leads District 3141 as District Rotaract Representative, aligning clubs, championing service, and keeping the district’s leadership network focused on impact.",
+    signature: "With service, Shreehari Nair",
   };
 
   const departments: LeadershipDepartment[] = [

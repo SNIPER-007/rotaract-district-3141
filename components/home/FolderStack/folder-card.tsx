@@ -3,29 +3,34 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/common/button";
 import { Magnetic } from "@/components/common/magnetic";
-import type { EventFolder } from "@/data/events";
 
-export interface FolderCardProps extends EventFolder {
+export interface HomeFolderStackEvent {
+  tabLabel: string;
+  title: string;
+  date: string;
+  location: string;
+  description: string;
+  image: string;
+  color: string;
+  cta: string;
   active: boolean;
 }
 
 export function FolderCard({
   title,
   date,
-  venue,
+  location,
   description,
-  cover,
-  gallery,
+  image,
   color,
-  registrationLink,
+  cta,
   active,
-}: FolderCardProps) {
+}: HomeFolderStackEvent) {
   const style = {
     ["--folder-color" as string]: color,
-    backgroundImage: "linear-gradient(180deg, color-mix(in srgb, var(--folder-color) 6%, var(--surface) 94%) 0%, var(--surface) 18%, var(--surface) 100%)",
+    backgroundImage:
+      "linear-gradient(180deg, color-mix(in srgb, var(--folder-color) 6%, var(--surface) 94%) 0%, var(--surface) 18%, var(--surface) 100%)",
     borderColor: "color-mix(in srgb, var(--folder-color) 18%, var(--border) 82%)",
   } as CSSProperties;
 
@@ -37,16 +42,12 @@ export function FolderCard({
       animate={{
         boxShadow: active ? "var(--shadow-lg)" : "var(--shadow-md)",
       }}
-      transition={{ type: "spring", stiffness: 260, damping: 28, mass: 0.8 }}
+      transition={{ duration: 0.7, ease: [0.215, 0.61, 0.355, 1] }}
     >
       <div className="grid gap-0 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
         <div className="flex flex-col justify-between gap-8 p-6 sm:p-7 lg:p-8 xl:p-10">
           <div className="space-y-5">
-            <div
-              aria-hidden="true"
-              className="h-1 w-20 rounded-full"
-              style={{ backgroundColor: "var(--folder-color)" }}
-            />
+            <div aria-hidden="true" className="h-1 w-20 rounded-full" style={{ backgroundColor: "var(--folder-color)" }} />
 
             <p data-folder-reveal="date" className="text-[0.72rem] font-semibold uppercase tracking-[0.34em] text-[var(--foreground)]/48">
               {date}
@@ -61,41 +62,20 @@ export function FolderCard({
             </p>
 
             <p className="text-[0.8rem] font-semibold uppercase tracking-[0.22em] text-[var(--foreground)]/52">
-              {venue}
+              {location}
             </p>
           </div>
 
           <div className="space-y-5">
             <Magnetic strength={18} className="inline-flex w-fit">
-              <Button
+              <button
                 data-folder-reveal="cta"
+                type="button"
                 className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--foreground)] px-5 py-3 text-[0.82rem] font-medium text-[var(--background)] shadow-[var(--shadow-xs)] transition-transform duration-200 hover:-translate-y-0.5"
-                onClick={() => {
-                  window.location.href = registrationLink;
-                }}
               >
-                Register
-              </Button>
+                {cta}
+              </button>
             </Magnetic>
-
-            <Button variant="secondary" className="h-11 rounded-full px-5 text-[0.8rem] font-medium">
-              <span className="inline-flex items-center gap-2">
-                More Photos
-                <ArrowRight size={14} />
-              </span>
-            </Button>
-
-            <div data-folder-reveal="tags" className="flex flex-wrap gap-2">
-              {gallery.map((item, index) => (
-                <span
-                  key={`${title}-${index}`}
-                  data-folder-reveal="tag"
-                  className="rounded-full border border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_78%,transparent)] px-3 py-2 text-[0.72rem] font-medium tracking-[0.08em] text-[var(--foreground)]/64"
-                >
-                  Photo {index + 1}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
 
@@ -109,12 +89,9 @@ export function FolderCard({
             }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-            >
+            <div aria-hidden="true" className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.04]">
               <Image
-                src={cover}
+                src={image}
                 alt={title}
                 fill
                 sizes="(min-width: 1024px) 40vw, 100vw"

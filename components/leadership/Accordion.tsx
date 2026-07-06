@@ -1,0 +1,1 @@
+export { DepartmentAccordion as Accordion } from "./DepartmentAccordion";

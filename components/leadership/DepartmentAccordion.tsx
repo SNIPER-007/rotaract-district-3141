@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { gsap } from "gsap";
 import type { LeadershipDepartment, LeadershipMember } from "@/data/leadership";
 import { MemberCard } from "./MemberCard";
 
@@ -14,6 +16,27 @@ interface DepartmentAccordionProps {
 
 export function DepartmentAccordion({ department, members, isOpen, onToggle }: DepartmentAccordionProps) {
   const prefersReducedMotion = useReducedMotion();
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen || prefersReducedMotion || !contentRef.current) {
+      return;
+    }
+
+    const cards = contentRef.current.querySelectorAll<HTMLElement>("[data-leadership-card]");
+
+    gsap.fromTo(
+      cards,
+      { autoAlpha: 0, y: 16 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.06,
+        ease: "power2.out",
+      },
+    );
+  }, [isOpen, prefersReducedMotion]);
 
   return (
     <motion.section
@@ -59,6 +82,7 @@ export function DepartmentAccordion({ department, members, isOpen, onToggle }: D
             exit={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
             transition={{ duration: 0.24, ease: [0.215, 0.61, 0.355, 1] }}
             className="overflow-hidden px-5 pb-5 md:px-6"
+            ref={contentRef}
           >
             <div className="grid gap-4 md:grid-cols-2">
               {members.map((member) => (

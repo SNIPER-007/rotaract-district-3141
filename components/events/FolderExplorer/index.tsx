@@ -8,7 +8,7 @@ import { SegmentedToggle } from "@/components/common/segmented-toggle";
 import { EVENT_CATEGORY_OPTIONS, EVENT_FOLDERS, type EventCategory, type EventFolder } from "@/data/events";
 import { FolderCard } from "@/components/events/folder-card";
 
-interface FolderStackProps {
+interface FolderExplorerProps {
   className?: string;
 }
 
@@ -28,7 +28,7 @@ function getCategoryFolders(category: EventCategory) {
   return EVENT_FOLDERS.filter((folder) => folder.category === category);
 }
 
-export function FolderStack({ className = "" }: FolderStackProps) {
+export function FolderExplorer({ className = "" }: FolderExplorerProps) {
   const prefersReducedMotion = useReducedMotion();
   const [category, setCategory] = useState<EventCategory>("Rotaract District");
   const [folderState, setFolderState] = useState<FolderState>(getDefaultState);

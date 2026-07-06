@@ -1,8 +1,8 @@
 import { LandingExperience } from "@/components/landing/landing-experience";
 import { ImpactPreview } from "@/components/home/impact-preview";
+import { FolderStack } from "@/components/home/FolderStack";
 import { WhoWeArePreview } from "@/components/home/who-we-are-preview";
 import { VisionSection } from "@/components/vision/vision-section";
-import { FolderStack } from "@/components/events";
 import { ContactPreview } from "@/components/contact/contact-preview";
 import Footer from "@/components/footer";
 

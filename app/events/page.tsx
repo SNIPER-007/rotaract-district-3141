@@ -4,7 +4,7 @@ import { GridBackground } from "@/components/common/grid-background";
 import { NoiseOverlay } from "@/components/common/noise-overlay";
 import { SiteNavbar } from "@/components/common/site-navbar";
 import { Container } from "@/components/common/container";
-import { FolderStack } from "@/components/events";
+import { FolderExplorer } from "@/components/events/FolderExplorer";
 import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
@@ -25,13 +25,13 @@ export default function EventsRoute() {
           <Container className="max-w-[1440px] px-6 md:px-12 xl:px-20">
             <div className="space-y-4">
               <p className="font-script text-[22px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-3deg]">
-                Events
+                Our
               </p>
-              <h1 className="max-w-[18ch] font-heading text-[clamp(3rem,6.5vw,5.5rem)] font-extrabold uppercase leading-[0.94] tracking-[-0.05em] text-[var(--foreground)] text-balance">
-                Featured Events
+              <h1 className="max-w-[18ch] font-mono text-[clamp(88px,9vw,150px)] font-black uppercase leading-none tracking-[0.26em] text-[var(--foreground)] text-balance">
+                EVENTS
               </h1>
               <p className="max-w-[560px] text-[0.98rem] leading-[1.8] text-[var(--foreground)]/70">
-                A dedicated screen for district experiences, program highlights, and event storytelling.
+                Creating memories together through district experiences, folder-style storytelling, and category-led navigation.
               </p>
             </div>
           </Container>
@@ -39,7 +39,7 @@ export default function EventsRoute() {
 
         <section className="relative bg-[var(--background)] pb-[clamp(4.5rem,8vw,7rem)] text-[var(--foreground)]">
           <Container className="max-w-[1440px] px-6 md:px-12 xl:px-20">
-            <FolderStack />
+            <FolderExplorer />
           </Container>
         </section>
 

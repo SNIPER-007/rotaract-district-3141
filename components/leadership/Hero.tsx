@@ -4,9 +4,15 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/common/button";
 import { Container } from "@/components/common/container";
+import type { LeadershipDrr } from "@/data/leadership";
 import { LEADERSHIP_HERO } from "@/data/leadership";
+import { DRRCard } from "./DRRCard";
 
-export function LeadershipHero() {
+interface LeadershipHeroProps {
+  member: LeadershipDrr;
+}
+
+export function LeadershipHero({ member }: LeadershipHeroProps) {
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -15,7 +21,7 @@ export function LeadershipHero() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,87,255,0.05),transparent_42%)]" />
       <Container className="relative max-w-[1440px] py-[clamp(3.5rem,7vw,6.25rem)]">
         <motion.div
-          className="grid gap-12 lg:grid-cols-1 lg:items-start"
+          className="grid gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-[88px]"
           initial={prefersReducedMotion ? false : { opacity: 0, y: 40 }}
           whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.42 }}
@@ -54,29 +60,25 @@ export function LeadershipHero() {
               >
                 {LEADERSHIP_HERO.intro}
               </p>
-              <p
-                data-leadership-hero-reveal="true"
-                className="font-script text-[22px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-2deg]"
-              >
-                {LEADERSHIP_HERO.support}
-              </p>
             </div>
 
             <div className="flex flex-wrap gap-5 pt-2" data-leadership-hero-reveal="true">
-              <Button variant="primary" onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" })} className="h-[60px] rounded-full px-9 text-[0.92rem] font-medium">
+              <Button variant="primary" onClick={() => document.getElementById("support-district")?.scrollIntoView({ behavior: "smooth", block: "start" })} className="h-[60px] rounded-full px-9 text-[0.92rem] font-medium">
                 <span className="inline-flex items-center gap-2">
                   Contact DRR
                   <ArrowRight size={16} />
                 </span>
               </Button>
-              <Button variant="secondary" onClick={() => document.getElementById("executive-committee")?.scrollIntoView({ behavior: "smooth", block: "start" })} className="h-[60px] rounded-full px-9 text-[0.92rem] font-medium">
+              <Button variant="secondary" onClick={() => document.getElementById("rotaract-section")?.scrollIntoView({ behavior: "smooth", block: "start" })} className="h-[60px] rounded-full px-9 text-[0.92rem] font-medium">
                 <span className="inline-flex items-center gap-2">
-                  Meet Executive Committee
+                  Meet Leadership
                   <ArrowRight size={16} />
                 </span>
               </Button>
             </div>
           </div>
+
+          <DRRCard member={member} />
 
         </motion.div>
       </Container>
