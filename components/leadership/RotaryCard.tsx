@@ -1,16 +1,10 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { Mail, Phone } from "lucide-react";
-import { Button } from "@/components/common/button";
 import type { RotaryMember } from "@/data/rotary";
 
 interface RotaryCardProps {
   member: RotaryMember;
-}
-
-function stripPhone(phone: string) {
-  return phone.replace(/[^0-9+]/g, "");
 }
 
 export function RotaryCard({ member }: RotaryCardProps) {
@@ -18,51 +12,25 @@ export function RotaryCard({ member }: RotaryCardProps) {
 
   return (
     <motion.article
-      className="rounded-[28px] border border-[rgba(0,0,0,0.06)] bg-white p-6 shadow-[0_16px_40px_rgba(0,0,0,0.05)]"
+      data-leadership-card="true"
+      className="min-h-[20rem] rounded-[32px] border border-[rgba(0,0,0,0.06)] bg-white p-7 shadow-[0_16px_40px_rgba(0,0,0,0.05)] md:p-8"
       initial={prefersReducedMotion ? false : { opacity: 0, y: 28 }}
       whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.24 }}
       transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }}
     >
-      <div className="space-y-2">
-        <p className="text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[var(--foreground)]/48">
-          {member.role}
+      <div className="space-y-2.5">
+        <p className="text-[0.74rem] font-semibold uppercase tracking-[0.28em] text-[var(--foreground)]/48">
+          {member.position}
         </p>
-        <h3 className="font-heading text-[clamp(1.4rem,2vw,2rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.04em] text-[var(--foreground)]">
+        <h3 className="font-heading text-[clamp(1.55rem,2.3vw,2.35rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.045em] text-[var(--foreground)] text-balance">
           {member.name}
         </h3>
       </div>
 
-      <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[0.92rem] text-[var(--foreground)]/68">
-        <span className="inline-flex items-center gap-2">
-          <Phone size={14} />
-          {member.phone}
-        </span>
-        <span className="inline-flex items-center gap-2">
-          <Mail size={14} />
-          {member.email}
-        </span>
-      </div>
-
-      <div className="mt-5 flex flex-wrap gap-3">
-        <Button
-          variant="secondary"
-          onClick={() => {
-            window.location.href = `tel:${stripPhone(member.phone)}`;
-          }}
-          className="h-10 rounded-full px-4 text-[0.76rem] font-medium"
-        >
-          Call
-        </Button>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            window.location.href = `mailto:${member.email}`;
-          }}
-          className="h-10 rounded-full px-4 text-[0.76rem] font-medium"
-        >
-          Email
-        </Button>
+      <div className="mt-6 space-y-3 rounded-[24px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_92%,white)] p-4 text-[0.96rem] leading-[1.65] text-[var(--foreground)]/68">
+        <p className="break-words">{member.phone}</p>
+        <p className="break-all">{member.email}</p>
       </div>
     </motion.article>
   );

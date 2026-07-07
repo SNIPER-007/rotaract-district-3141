@@ -4,15 +4,18 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/common/button";
 import { Container } from "@/components/common/container";
+import { SegmentedToggle } from "@/components/common/segmented-toggle";
 import type { LeadershipDrr } from "@/data/leadership";
 import { LEADERSHIP_HERO } from "@/data/leadership";
 import { DRRCard } from "./DRRCard";
 
 interface LeadershipHeroProps {
   member: LeadershipDrr;
+  mode: "rotaract" | "rotary";
+  onModeChange: (mode: "rotaract" | "rotary") => void;
 }
 
-export function LeadershipHero({ member }: LeadershipHeroProps) {
+export function LeadershipHero({ member, mode, onModeChange }: LeadershipHeroProps) {
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -20,8 +23,20 @@ export function LeadershipHero({ member }: LeadershipHeroProps) {
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(250,248,245,0.96)_0%,rgba(250,248,245,0.9)_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,87,255,0.05),transparent_42%)]" />
       <Container className="relative max-w-[1440px] py-[clamp(3.5rem,7vw,6.25rem)]">
+        <div className="mb-8 flex justify-start">
+          <SegmentedToggle
+            options={[
+              { label: "Rotaract", value: "rotaract" },
+              { label: "Rotary", value: "rotary" },
+            ]}
+            value={mode}
+            onChange={onModeChange}
+            className="max-w-[28rem]"
+          />
+        </div>
+
         <motion.div
-          className="grid gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-[88px]"
+          className="flex flex-col gap-12"
           initial={prefersReducedMotion ? false : { opacity: 0, y: 40 }}
           whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.42 }}
@@ -62,6 +77,12 @@ export function LeadershipHero({ member }: LeadershipHeroProps) {
               </p>
             </div>
 
+            {mode === "rotaract" ? (
+              <div className="max-w-[720px] pt-2">
+                <DRRCard member={member} />
+              </div>
+            ) : null}
+
             <div className="flex flex-wrap gap-5 pt-2" data-leadership-hero-reveal="true">
               <Button variant="primary" onClick={() => document.getElementById("support-district")?.scrollIntoView({ behavior: "smooth", block: "start" })} className="h-[60px] rounded-full px-9 text-[0.92rem] font-medium">
                 <span className="inline-flex items-center gap-2">
@@ -77,8 +98,6 @@ export function LeadershipHero({ member }: LeadershipHeroProps) {
               </Button>
             </div>
           </div>
-
-          <DRRCard member={member} />
 
         </motion.div>
       </Container>

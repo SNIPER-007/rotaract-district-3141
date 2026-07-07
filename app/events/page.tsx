@@ -23,8 +23,8 @@ export default function EventsRoute() {
       <div className="relative z-[1]">
         <section className="relative overflow-hidden bg-[var(--background)] py-[clamp(4.5rem,8vw,7rem)] text-[var(--foreground)]">
           <Container className="max-w-[1440px] px-6 md:px-12 xl:px-20">
-            <div className="space-y-4">
-              <p className="font-script text-[22px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-3deg]">
+            <div className="space-y-6">
+              <p className="pb-2 font-script text-[22px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-3deg]">
                 Our
               </p>
               <h1 className="max-w-[18ch] font-mono text-[clamp(88px,9vw,150px)] font-black uppercase leading-none tracking-[0.26em] text-[var(--foreground)] text-balance">

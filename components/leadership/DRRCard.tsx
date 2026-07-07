@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { Button } from "@/components/common/button";
 import { MemberPhoto } from "./MemberPhoto";
 import type { LeadershipDrr } from "@/data/leadership";
@@ -22,7 +22,7 @@ export function DRRCard({ member, className = "" }: DRRCardProps) {
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
     >
-      <div className="space-y-4">
+      <div className="space-y-5">
         <div className="relative w-fit pl-1">
           <p className="font-script text-[22px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-3deg]">
             District Rotaract Representative
@@ -32,31 +32,35 @@ export function DRRCard({ member, className = "" }: DRRCardProps) {
           </svg>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[280px] overflow-hidden rounded-[30px] border border-[rgba(0,0,0,0.05)] bg-[linear-gradient(180deg,#f7f0e3_0%,#fbf6ec_100%)] p-4 shadow-[0_16px_36px_rgba(0,0,0,0.06)] lg:mx-0 lg:w-[280px] lg:shrink-0">
+        <div className="relative mx-auto w-full max-w-[320px] overflow-hidden rounded-[30px] border border-[rgba(0,0,0,0.05)] bg-[linear-gradient(180deg,#f7f0e3_0%,#fbf6ec_100%)] p-4 shadow-[0_16px_36px_rgba(0,0,0,0.06)] lg:mx-0 lg:w-[320px] lg:shrink-0">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[24px] bg-[linear-gradient(180deg,rgba(0,87,255,0.08),rgba(0,87,255,0.02))]">
-            <MemberPhoto photo={member.photo} alt={member.name} sizes="280px" />
+            <MemberPhoto photo={member.photo} alt={member.name} sizes="320px" />
           </div>
         </div>
 
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <p className="text-[0.72rem] font-semibold uppercase tracking-[0.34em] text-[var(--foreground)]/50">
             {member.name}
           </p>
           <h2 className="font-heading text-[clamp(2rem,4vw,3.4rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.05em] text-[var(--foreground)] text-balance">
             {member.designation}
           </h2>
-          <p className="text-[0.78rem] font-semibold uppercase tracking-[0.28em] text-[var(--foreground)]/52">
-            {member.tenure}
-          </p>
         </div>
 
         <p className="max-w-[54ch] text-[clamp(0.96rem,1.05vw,1rem)] leading-[1.75] text-[var(--foreground)]/72 text-balance">
           {member.bio}
         </p>
 
-        <p className="font-script text-[20px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-2deg]">
-          {member.signature}
-        </p>
+        <div className="space-y-2 rounded-[24px] border border-[rgba(0,0,0,0.05)] bg-white/65 p-4 text-[0.92rem] text-[var(--foreground)]/72">
+          <p className="inline-flex items-center gap-2">
+            <Phone size={14} />
+            {member.phone}
+          </p>
+          <p className="inline-flex items-center gap-2 break-all">
+            <Mail size={14} />
+            {member.email}
+          </p>
+        </div>
 
         <div className="flex flex-wrap gap-3 pt-1">
           <Button
@@ -66,11 +70,7 @@ export function DRRCard({ member, className = "" }: DRRCardProps) {
             }}
             className="h-10 rounded-full px-4.5 text-[0.76rem] font-medium"
           >
-            <span className="inline-flex items-center gap-2">
-              <Phone size={14} />
-              Contact
-              <ArrowRight size={14} />
-            </span>
+            Call DRR
           </Button>
           <Button
             variant="secondary"
@@ -79,11 +79,7 @@ export function DRRCard({ member, className = "" }: DRRCardProps) {
             }}
             className="h-10 rounded-full px-4.5 text-[0.76rem] font-medium"
           >
-            <span className="inline-flex items-center gap-2">
-              <Mail size={14} />
-              Email
-              <ArrowRight size={14} />
-            </span>
+            Email DRR
           </Button>
         </div>
       </div>

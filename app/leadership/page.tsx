@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { LeadershipPage } from "@/components/leadership/page";
 import { loadLeadershipPageData } from "@/data/leadership.server";
+import { loadRotaryDirectory } from "@/data/rotary.server";
 
 export const metadata: Metadata = {
   title: "Leadership",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 
 export default function LeadershipRoute() {
   const leadershipData = loadLeadershipPageData();
+  const rotaryData = loadRotaryDirectory();
 
-  return <LeadershipPage data={leadershipData} />;
+  return <LeadershipPage data={leadershipData} rotaryMembers={rotaryData.members} />;
 }

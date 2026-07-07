@@ -10,7 +10,6 @@ import { NoiseOverlay } from "@/components/common/noise-overlay";
 import { SiteNavbar } from "@/components/common/site-navbar";
 import Footer from "@/components/footer";
 import { SupportDistrict } from "@/components/crowdfunding/SupportDistrict";
-import { SegmentedToggle } from "@/components/common/segmented-toggle";
 import {
   LEADERSHIP_SEARCH_FILTERS,
   type LeadershipDepartment,
@@ -18,11 +17,11 @@ import {
   type LeadershipMember,
   type LeadershipPageData,
 } from "@/data/leadership";
-import { ROTARY_DIRECTORY, type RotaryMember } from "@/data/rotary";
+import type { RotaryMember } from "@/data/rotary";
 import { AccordionGroupSection } from "./AccordionGroupSection";
 import { LeaderCard } from "./LeaderCard";
 import { LeadershipHero } from "./Hero";
-import { RotaryCard } from "./RotaryCard";
+import { RotaryDirectorySection } from "./RotaryDirectorySection";
 import { SearchBar } from "./SearchBar";
 
 if (typeof window !== "undefined") {
@@ -51,9 +50,9 @@ function matchesRotaryMember(member: RotaryMember, filter: LeadershipFilter, que
   }
 
   const haystacks: Record<LeadershipFilter, string[]> = {
-    name: [member.name, member.role, member.email, member.phone],
-    designation: [member.role, member.name, member.email, member.phone],
-    department: [member.role, member.name, member.email, member.phone],
+    name: [member.name, member.position, member.email, member.phone],
+    designation: [member.position, member.name, member.email, member.phone],
+    department: [member.position, member.name, member.email, member.phone],
   };
 
   return haystacks[filter].some((value) => value.toLowerCase().includes(query));
@@ -74,15 +73,15 @@ function filterRotaryMembers(members: readonly RotaryMember[], filter: Leadershi
 
 interface LeadershipPageProps {
   data: LeadershipPageData;
+  rotaryMembers: readonly RotaryMember[];
 }
 
-export function LeadershipPage({ data }: LeadershipPageProps) {
+export function LeadershipPage({ data, rotaryMembers }: LeadershipPageProps) {
   const prefersReducedMotion = useReducedMotion();
   const heroRef = useRef<HTMLDivElement>(null);
   const executiveRef = useRef<HTMLDivElement>(null);
   const teamsRef = useRef<HTMLDivElement>(null);
   const zonesRef = useRef<HTMLDivElement>(null);
-  const rotaryRef = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<LeadershipMode>("rotaract");
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<LeadershipFilter>("name");
@@ -106,8 +105,8 @@ export function LeadershipPage({ data }: LeadershipPageProps) {
   );
 
   const filteredRotary = useMemo(
-    () => filterRotaryMembers(ROTARY_DIRECTORY, filter, normalizedQuery).slice().sort((left, right) => left.name.localeCompare(right.name)),
-    [filter, normalizedQuery],
+    () => filterRotaryMembers(rotaryMembers, filter, normalizedQuery),
+    [filter, normalizedQuery, rotaryMembers],
   );
 
   const resultCount =
@@ -148,7 +147,7 @@ export function LeadershipPage({ data }: LeadershipPageProps) {
         },
       );
 
-      const sections = [executiveRef.current, teamsRef.current, zonesRef.current, rotaryRef.current].filter(
+      const sections = [executiveRef.current, teamsRef.current, zonesRef.current].filter(
         (element): element is HTMLDivElement => element !== null,
       );
 
@@ -186,21 +185,11 @@ export function LeadershipPage({ data }: LeadershipPageProps) {
 
       <div className="relative z-[1]">
         <div ref={heroRef}>
-          <LeadershipHero member={data.drr} />
+          <LeadershipHero member={data.drr} mode={mode} onModeChange={setMode} />
         </div>
 
         <section id="rotaract-section" className="relative bg-[var(--background)] px-6 pb-4 pt-0 md:px-12 xl:px-20">
           <div className="mx-auto max-w-[1440px] space-y-6">
-            <SegmentedToggle
-              options={[
-                { label: "Rotaract", value: "rotaract" },
-                { label: "Rotary", value: "rotary" },
-              ]}
-              value={mode}
-              onChange={setMode}
-              className="max-w-[28rem]"
-            />
-
             <SearchBar
               query={query}
               filter={filter}
@@ -287,38 +276,7 @@ export function LeadershipPage({ data }: LeadershipPageProps) {
             </section>
           </>
         ) : (
-          <section ref={rotaryRef} id="rotary-section" className="relative overflow-hidden bg-[var(--background)] py-[clamp(4.5rem,8vw,7rem)] text-[var(--foreground)]">
-            <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-8 px-6 md:px-12 xl:px-20">
-              <div className="space-y-4">
-                <div className="relative w-fit pl-1">
-                  <p className="font-script text-[22px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-3deg]">
-                    Rotary District Directory
-                  </p>
-                  <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[9rem] text-[var(--accent)]">
-                    <path d="M2 11C18 7 35 12 52 9C69 6 88 9 105 8C123 7 142 10 178 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.75" />
-                  </svg>
-                </div>
-                <h2 className="max-w-[20ch] font-heading text-[clamp(2.8rem,6vw,5rem)] font-extrabold uppercase leading-[0.94] tracking-[-0.05em] text-[var(--foreground)] text-balance">
-                  Rotary District Directory
-                </h2>
-                <p className="max-w-[560px] text-[0.98rem] leading-[1.8] text-[var(--foreground)]/70">
-                  An elegant text-only directory for Rotary leadership and district contacts.
-                </p>
-              </div>
-
-              {filteredRotary.length > 0 ? (
-                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                  {filteredRotary.map((member) => (
-                    <RotaryCard key={member.email} member={member} />
-                  ))}
-                </div>
-              ) : (
-                <p className="max-w-2xl text-[0.98rem] leading-[1.8] text-[var(--foreground)]/68">
-                  No Rotary directory entries matched the current search.
-                </p>
-              )}
-            </div>
-          </section>
+          <RotaryDirectorySection members={filteredRotary} />
         )}
 
         <SupportDistrict />

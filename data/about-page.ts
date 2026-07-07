@@ -1,5 +1,5 @@
 export const ABOUT_PAGE_HERO = {
-  eyebrow: "ABOUT",
+  eyebrow: "WHO WE ARE",
   title: "Rotaract District 3141",
   subtitle: "11 Years of Leadership, Fellowship & Service",
 } as const;

@@ -17,7 +17,7 @@ export const ABOUT_PAGE_STORY_DRR = {
 } as const;
 
 export const ABOUT_PAGE_STORY_JOURNEY = {
-  eyebrow: "OUR JOURNEY",
+  eyebrow: "OUR STORY",
   title: "Our Journey",
   cards: [
     {
@@ -57,7 +57,7 @@ export const ABOUT_PAGE_STORY_JOURNEY = {
 
 export const ABOUT_PAGE_STORY_WHAT_WE_DO = {
   eyebrow: "WHAT WE DO",
-  title: "What We Do",
+  title: "District Programs",
   rows: [
     {
       title: "Community Service",
