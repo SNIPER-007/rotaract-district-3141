@@ -86,6 +86,7 @@ export function LeadershipPage({ data, rotaryMembers }: LeadershipPageProps) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<LeadershipFilter>("name");
   const [openDepartment, setOpenDepartment] = useState<string>(data.departments[0]?.name ?? "");
+  const [openZone, setOpenZone] = useState<string>(data.zones[0]?.name ?? "");
 
   const normalizedQuery = query.trim().toLowerCase();
 
@@ -126,6 +127,19 @@ export function LeadershipPage({ data, rotaryMembers }: LeadershipPageProps) {
 
     setOpenDepartment(filteredDepartments[0]?.name ?? data.departments[0]?.name ?? "");
   }, [data.departments, filteredDepartments, mode, normalizedQuery]);
+
+  useEffect(() => {
+    if (mode !== "rotaract") {
+      return;
+    }
+
+    if (normalizedQuery) {
+      setOpenZone(filteredZones[0]?.name ?? "");
+      return;
+    }
+
+    setOpenZone(filteredZones[0]?.name ?? data.zones[0]?.name ?? "");
+  }, [data.zones, filteredZones, mode, normalizedQuery]);
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -245,35 +259,18 @@ export function LeadershipPage({ data, rotaryMembers }: LeadershipPageProps) {
               />
             </div>
 
-            <section ref={zonesRef} id="zone-representatives" className="relative overflow-hidden bg-[var(--background)] py-[clamp(4.5rem,8vw,7rem)] text-[var(--foreground)]">
-              <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-6 px-6 md:px-12 xl:px-20">
-                <div className="space-y-4">
-                  <div className="relative w-fit pl-1">
-                    <p className="font-script text-[22px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-3deg]">
-                      Zonal Representatives
-                    </p>
-                    <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[9rem] text-[var(--accent)]">
-                      <path d="M2 11C18 7 35 12 52 9C69 6 88 9 105 8C123 7 142 10 178 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.75" />
-                    </svg>
-                  </div>
-                  <h2 className="max-w-[20ch] font-heading text-[clamp(2.8rem,6vw,5rem)] font-extrabold uppercase leading-[0.94] tracking-[-0.05em] text-[var(--foreground)] text-balance">
-                    Zonal Representatives
-                  </h2>
-                </div>
-
-                {filteredZones.length > 0 ? (
-                  <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-                    {filteredZones.flatMap((zone) => zone.members).map((member) => (
-                      <LeaderCard key={`${member.slug}-${member.department}`} member={member} />
-                    ))}
-                  </div>
-                ) : (
-                  <p className="max-w-2xl text-[0.98rem] leading-[1.8] text-[var(--foreground)]/68">
-                    No zonal representatives matched the current search.
-                  </p>
-                )}
-              </div>
-            </section>
+            <div ref={zonesRef}>
+              <AccordionGroupSection
+                id="zone-representatives"
+                eyebrow="Zonal Representatives"
+                title="Zone Representatives"
+                groups={filteredZones}
+                openGroups={openZone ? [openZone] : []}
+                onToggle={(name) => {
+                  setOpenZone((current) => (current === name ? "" : name));
+                }}
+              />
+            </div>
           </>
         ) : (
           <RotaryDirectorySection members={filteredRotary} />
