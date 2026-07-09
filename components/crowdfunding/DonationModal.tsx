@@ -116,7 +116,7 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
 
   return (
     <Modal open={open} onClose={onClose} title={project.title}>
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6 max-sm:space-y-5">
         <div className="grid gap-3 sm:grid-cols-2">
           {DONATION_TYPES.map((option) => (
             <ToggleButton
@@ -129,11 +129,11 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
           ))}
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <div className="space-y-4 rounded-[28px] border border-[rgba(0,0,0,0.06)] bg-white p-5 shadow-[0_14px_34px_rgba(0,0,0,0.05)]">
+        <div className="grid gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-start max-sm:gap-4">
+          <div className="space-y-4 rounded-[28px] border border-[rgba(0,0,0,0.06)] bg-white p-5 shadow-[0_14px_34px_rgba(0,0,0,0.05)] max-sm:space-y-3 max-sm:p-4">
             {isIndividual ? (
               <>
-                <div className="relative mx-auto aspect-square w-full max-w-[280px] overflow-hidden rounded-[24px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_92%,white)] p-4 shadow-[0_16px_34px_rgba(0,0,0,0.06)]">
+                <div className="relative mx-auto aspect-square w-full max-w-[240px] overflow-hidden rounded-[24px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_92%,white)] p-3 shadow-[0_16px_34px_rgba(0,0,0,0.06)] max-sm:max-w-[170px] max-sm:p-2.5">
                   <motion.img
                     src={project.qrImage}
                     alt={`${project.title} scanner`}
@@ -143,7 +143,7 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
                   />
                 </div>
 
-                <div className="space-y-3 rounded-[22px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_94%,white)] p-4">
+                <div className="space-y-3 rounded-[22px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_94%,white)] p-4 max-sm:p-3">
                   <p className="text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[var(--foreground)]/48">Scanner</p>
                   <p className="break-all text-[0.96rem] font-medium text-[var(--foreground)]">{project.upi}</p>
                   <p className="text-[0.84rem] leading-[1.7] text-[var(--foreground)]/68">Scan the QR code, keep the amount ready, and complete the contribution in one step.</p>
@@ -165,7 +165,7 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
 
                 {paymentRail === "upi" ? (
                   <>
-                    <div className="relative mx-auto aspect-square w-full max-w-[280px] overflow-hidden rounded-[24px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_92%,white)] p-4 shadow-[0_16px_34px_rgba(0,0,0,0.06)]">
+                    <div className="relative mx-auto aspect-square w-full max-w-[240px] overflow-hidden rounded-[24px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_92%,white)] p-3 shadow-[0_16px_34px_rgba(0,0,0,0.06)] max-sm:max-w-[170px] max-sm:p-2.5">
                       <motion.img
                         src={project.qrImage}
                         alt={`${project.title} UPI code`}
@@ -175,13 +175,13 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
                       />
                     </div>
 
-                    <div className="space-y-3 rounded-[22px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_94%,white)] p-4">
+                    <div className="space-y-3 rounded-[22px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_94%,white)] p-4 max-sm:p-3">
                       <p className="text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[var(--foreground)]/48">UPI ID</p>
                       <p className="break-all text-[0.96rem] font-medium text-[var(--foreground)]">{project.upi}</p>
                     </div>
                   </>
                 ) : (
-                  <div className="space-y-3 rounded-[22px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_94%,white)] p-4">
+                  <div className="space-y-3 rounded-[22px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_94%,white)] p-4 max-sm:p-3">
                     <p className="text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[var(--foreground)]/48">Bank details</p>
                     <div className="grid gap-3 text-[0.92rem] leading-[1.8] text-[var(--foreground)]/72">
                       <div>
@@ -210,7 +210,7 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
               </>
             )}
 
-            <div className="space-y-3 rounded-[22px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_94%,white)] p-4">
+            <div className="space-y-3 rounded-[22px] border border-[rgba(0,0,0,0.05)] bg-[color-mix(in_srgb,var(--surface)_94%,white)] p-4 max-sm:p-3">
               <p className="text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[var(--foreground)]/48">Receipt information</p>
               <p className="text-[0.92rem] leading-[1.8] text-[var(--foreground)]/68">
                 Selected amount: ₹{displayAmount}. {isIndividual ? "Anonymous yes/no is captured with the donor record." : "Company donation details include GSTIN and 80G preference."}
@@ -218,8 +218,8 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
             </div>
           </div>
 
-          <div className="space-y-5">
-            <div className="space-y-3 rounded-[28px] border border-[rgba(0,0,0,0.06)] bg-white p-5 shadow-[0_14px_34px_rgba(0,0,0,0.05)]">
+          <div className="space-y-5 max-sm:space-y-4">
+            <div className="space-y-3 rounded-[28px] border border-[rgba(0,0,0,0.06)] bg-white p-5 shadow-[0_14px_34px_rgba(0,0,0,0.05)] max-sm:p-4">
               <p className="text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[var(--foreground)]/48">Amount</p>
               <div className="flex flex-wrap gap-2">
                 {AMOUNTS.map((amount) => {
@@ -359,7 +359,7 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
               </div>
             )}
 
-            <div className="space-y-3 rounded-[28px] border border-[rgba(0,0,0,0.06)] bg-[color-mix(in_srgb,var(--surface)_94%,white)] p-5">
+            <div className="space-y-3 rounded-[28px] border border-[rgba(0,0,0,0.06)] bg-[color-mix(in_srgb,var(--surface)_94%,white)] p-5 max-sm:p-4">
               <p className="text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[var(--foreground)]/48">Donation summary</p>
               <p className="text-[0.92rem] leading-[1.8] text-[var(--foreground)]/68">
                 {donationType === "individual"
@@ -368,7 +368,7 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
               </p>
             </div>
 
-            <Button variant="primary" type="submit" className="h-12 w-full rounded-full px-5 text-[0.86rem] font-medium">
+            <Button variant="primary" type="submit" className="h-12 w-full rounded-full px-5 text-[0.86rem] font-medium max-sm:h-11">
               Donate Now
             </Button>
           </div>

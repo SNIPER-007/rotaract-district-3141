@@ -41,8 +41,6 @@ export function CrowdfundingPage() {
       <NoiseOverlay className="pointer-events-none fixed inset-0 z-0" opacity={0.03} />
 
       <div className="relative z-[1]">
-        <LiveDonationsTable donations={liveDonations} />
-
         <section className="relative overflow-hidden bg-[var(--background)] py-[clamp(4.5rem,8vw,7rem)] text-[var(--foreground)]">
           <Container className="max-w-[1440px] px-6 md:px-12 xl:px-20">
             <motion.div
@@ -144,6 +142,7 @@ export function CrowdfundingPage() {
         </section>
 
         <SupportDistrict />
+        <LiveDonationsTable donations={liveDonations} />
         <Footer />
       </div>
 
