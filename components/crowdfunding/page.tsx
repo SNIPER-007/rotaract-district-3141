@@ -33,6 +33,9 @@ export function CrowdfundingPage() {
     ]);
   };
 
+  const underTenThousandProjects = PROJECTS.filter((project) => project.donationBand === "under-10000");
+  const overTenThousandProjects = PROJECTS.filter((project) => project.donationBand === "over-10000");
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
       <Cursor />
@@ -122,19 +125,49 @@ export function CrowdfundingPage() {
             <div className="mb-8 space-y-4">
               <div className="relative w-fit pl-2">
                 <p className="font-script text-[20px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-2deg]">
-                  Projects
+                  Rotaract Clubs
                 </p>
                 <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[8.5rem] text-[var(--accent)]">
                   <path d="M2 11C18 7 35 12 52 9C69 6 88 9 105 8C123 7 142 10 178 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.75" />
                 </svg>
               </div>
               <h2 className="max-w-[20ch] font-heading text-[clamp(2.8rem,6vw,5rem)] font-extrabold uppercase leading-[0.94] tracking-[-0.05em] text-[var(--foreground)] text-balance">
-                Project Grid
+                Donations Under ₹10,000
               </h2>
+              <p className="max-w-[700px] text-[0.98rem] leading-[1.8] text-[var(--foreground)]/70">
+                Use this section for smaller club-level drives where any amount below ₹10,000 helps build momentum quickly.
+              </p>
             </div>
 
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {PROJECTS.map((project) => (
+              {underTenThousandProjects.map((project) => (
+                <DonationCard key={project.title} project={project} onDonate={setSelectedProject} />
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        <section className="relative bg-[var(--background)] py-[clamp(4rem,8vw,6.5rem)] text-[var(--foreground)]">
+          <Container className="max-w-[1440px] px-6 md:px-12 xl:px-20">
+            <div className="mb-8 space-y-4">
+              <div className="relative w-fit pl-2">
+                <p className="font-script text-[20px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-2deg]">
+                  Rotaract District
+                </p>
+                <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[8.5rem] text-[var(--accent)]">
+                  <path d="M2 11C18 7 35 12 52 9C69 6 88 9 105 8C123 7 142 10 178 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.75" />
+                </svg>
+              </div>
+              <h2 className="max-w-[22ch] font-heading text-[clamp(2.8rem,6vw,5rem)] font-extrabold uppercase leading-[0.94] tracking-[-0.05em] text-[var(--foreground)] text-balance">
+                Donations ₹10,000 And Above
+              </h2>
+              <p className="max-w-[700px] text-[0.98rem] leading-[1.8] text-[var(--foreground)]/70">
+                Use this section for larger district-scale campaigns where a minimum donation of ₹10,000 helps reach major fundraising goals faster.
+              </p>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {overTenThousandProjects.map((project) => (
                 <DonationCard key={project.title} project={project} onDonate={setSelectedProject} />
               ))}
             </div>

@@ -19,6 +19,7 @@ export function DonationCard({ project, onDonate }: DonationCardProps) {
   const prefersReducedMotion = useReducedMotion();
   const percent = Math.round((project.raised / project.goal) * 100);
   const label = project.tags[0] ?? "Project";
+  const sectionLabel = project.donationBand === "over-10000" ? "Rotaract District" : "Rotaract Clubs";
 
   return (
     <motion.article
@@ -39,6 +40,9 @@ export function DonationCard({ project, onDonate }: DonationCardProps) {
       <div className="space-y-5 p-5 md:p-6">
         <div className="space-y-2">
           <p className="text-[0.72rem] font-semibold uppercase tracking-[0.3em] text-[var(--foreground)]/48">
+            {sectionLabel}
+          </p>
+          <p className="text-[0.72rem] font-semibold uppercase tracking-[0.3em] text-[var(--foreground)]/48">
             {label}
           </p>
           <h3 className="font-heading text-[clamp(1.5rem,2.6vw,2.2rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.04em] text-[var(--foreground)] text-balance">
@@ -53,6 +57,10 @@ export function DonationCard({ project, onDonate }: DonationCardProps) {
           <div className="flex items-end justify-between gap-3 text-[0.86rem] text-[var(--foreground)]/68">
             <span>Raised ₹{formatRupees(project.raised)}</span>
             <span>Goal ₹{formatRupees(project.goal)}</span>
+          </div>
+          <div className="flex items-center justify-between gap-3 text-[0.8rem] font-medium text-[var(--foreground)]/64">
+            <span>Minimum donation</span>
+            <span>₹{formatRupees(project.minimumDonation)}+</span>
           </div>
           <ProgressBar value={percent} />
           <div className="flex items-center justify-between gap-3 text-[0.82rem] font-medium text-[var(--foreground)]/70">

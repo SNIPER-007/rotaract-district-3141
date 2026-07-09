@@ -7,7 +7,7 @@ export const ABOUT_PAGE_STORY_HERO = {
 
 export const ABOUT_PAGE_STORY_DRR = {
   eyebrow: "MESSAGE FROM",
-  nameLines: ["PHF. RTR.", "SHREE HARI NAIR"] as const,
+  nameLines: ["PHF. RTR. SHREE HARI NAIR"] as const,
   role: "District Rotaract Representative",
   tenure: "2026–27",
   preview:

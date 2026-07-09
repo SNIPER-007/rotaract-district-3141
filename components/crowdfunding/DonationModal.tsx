@@ -15,7 +15,8 @@ interface DonationModalProps {
   onSubmit?: (draft: LiveDonationDraft) => void;
 }
 
-const AMOUNTS = [500, 1000, 2500, 5000] as const;
+const SMALL_AMOUNT_OPTIONS = [500, 1000, 2500, 5000, 7500] as const;
+const LARGE_AMOUNT_OPTIONS = [10000, 25000, 50000, 100000] as const;
 const DONATION_TYPES: readonly { value: DonationType; label: string; description: string }[] = [
   { value: "individual", label: "Individual", description: "Scanner payment with personal donation details." },
   { value: "company", label: "Company", description: "UPI or net banking with company information." },
@@ -58,7 +59,8 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
 export function DonationModal({ project, open, onClose, onSubmit }: DonationModalProps) {
   const [donationType, setDonationType] = useState<DonationType>("individual");
   const [paymentRail, setPaymentRail] = useState<DonationPaymentRail>("upi");
-  const [selectedAmount, setSelectedAmount] = useState<number>(1000);
+  const [selectedAmount, setSelectedAmount] = useState<number | "custom">(1000);
+  const [customAmount, setCustomAmount] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -75,6 +77,7 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
     setDonationType("individual");
     setPaymentRail("upi");
     setSelectedAmount(1000);
+    setCustomAmount("");
     setName("");
     setEmail("");
     setPhone("");
@@ -85,14 +88,18 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
   }, [open, project?.title]);
 
   const displayAmount = useMemo(() => {
-    return selectedAmount.toString();
-  }, [selectedAmount]);
+    return selectedAmount === "custom" ? customAmount || "0" : selectedAmount.toString();
+  }, [customAmount, selectedAmount]);
 
   if (!project) {
     return null;
   }
 
+  const amountOptions = project.donationBand === "over-10000" ? LARGE_AMOUNT_OPTIONS : SMALL_AMOUNT_OPTIONS;
   const isIndividual = donationType === "individual";
+
+  const minimumAmount = project.donationBand === "over-10000" ? 10000 : 500;
+  const maximumAmount = project.donationBand === "over-10000" ? undefined : 9999;
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -100,13 +107,15 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
     onClose();
   };
 
+  const resolvedAmount = selectedAmount === "custom" ? Number(customAmount) || 0 : selectedAmount;
+
   const donationDraft: LiveDonationDraft = {
     donorType: donationType,
     paymentRail: isIndividual ? "scanner" : paymentRail,
     donorName: isIndividual ? name || "Anonymous Donor" : companyName || name || "Company Donor",
     email,
     phone,
-    amount: selectedAmount,
+    amount: resolvedAmount,
     anonymous,
     projectTitle: project.title,
     companyName: isIndividual ? undefined : companyName,
@@ -222,7 +231,7 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
             <div className="space-y-3 rounded-[28px] border border-[rgba(0,0,0,0.06)] bg-white p-5 shadow-[0_14px_34px_rgba(0,0,0,0.05)] max-sm:p-4">
               <p className="text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[var(--foreground)]/48">Amount</p>
               <div className="flex flex-wrap gap-2">
-                {AMOUNTS.map((amount) => {
+                {amountOptions.map((amount) => {
                   const isActive = selectedAmount === amount;
 
                   return (
@@ -240,7 +249,37 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
                     </button>
                   );
                 })}
+                <button
+                  type="button"
+                  onClick={() => setSelectedAmount("custom")}
+                  className={`rounded-full px-4 py-2 text-[0.76rem] font-semibold uppercase tracking-[0.2em] transition-all duration-300 ${
+                    selectedAmount === "custom"
+                      ? "bg-[var(--foreground)] text-[var(--background)] shadow-[0_12px_26px_rgba(17,17,17,0.14)]"
+                      : "border border-[rgba(0,0,0,0.08)] bg-white text-[var(--foreground)]/62"
+                  }`}
+                >
+                  Custom
+                </button>
               </div>
+
+              <p className="text-[0.82rem] leading-[1.6] text-[var(--foreground)]/60">
+                {project.donationBand === "over-10000"
+                  ? "This campaign starts at ₹10,000 and is intended for larger district fundraising goals."
+                  : "This campaign accepts amounts up to ₹9,999 for smaller club-level fundraising goals."}
+              </p>
+
+              {selectedAmount === "custom" ? (
+                <input
+                  value={customAmount}
+                  onChange={(event) => setCustomAmount(event.target.value)}
+                  placeholder={project.donationBand === "over-10000" ? "Enter amount of ₹10,000 or more" : "Enter amount below ₹10,000"}
+                  type="number"
+                  min={minimumAmount}
+                  max={maximumAmount}
+                  step="1"
+                  className="h-12 w-full rounded-full border border-[rgba(0,0,0,0.08)] bg-white px-4 text-[0.95rem] outline-none focus:border-[rgba(0,87,255,0.24)]"
+                />
+              ) : null}
             </div>
 
             {isIndividual ? (
@@ -365,6 +404,10 @@ export function DonationModal({ project, open, onClose, onSubmit }: DonationModa
                 {donationType === "individual"
                   ? `Individual donation selected with scanner support and ${anonymous ? "anonymous" : "named"} contribution details.`
                   : `Company donation selected with ${paymentRail === "upi" ? "UPI" : "net banking"} transfer, GSTIN, and ${wants80g ? "80G requested" : "no 80G request"}.`}
+              </p>
+              <p className="text-[0.82rem] leading-[1.6] text-[var(--foreground)]/60">
+                Band: {project.donationBand === "over-10000" ? `₹10,000 and above` : `below ₹10,000`} · Floor: ₹{minimumAmount.toLocaleString("en-IN")}
+                {maximumAmount ? ` · Ceiling: ₹${maximumAmount.toLocaleString("en-IN")}` : ""}
               </p>
             </div>
 

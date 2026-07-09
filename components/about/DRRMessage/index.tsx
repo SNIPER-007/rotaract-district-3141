@@ -34,12 +34,8 @@ export function DRRMessage() {
               <p className="text-[0.72rem] font-semibold uppercase tracking-[0.38em] text-[var(--foreground)]/50">
                 MESSAGE FROM THE DRR
               </p>
-              <h2 className="max-w-[12ch] font-heading text-[clamp(3.2rem,7vw,5.6rem)] font-extrabold uppercase leading-[0.92] tracking-[-0.05em] text-[var(--foreground)] text-balance">
-                {ABOUT_PAGE_STORY_DRR.nameLines.map((line) => (
-                  <span key={line} className="block">
-                    {line}
-                  </span>
-                ))}
+              <h2 className="max-w-none whitespace-nowrap font-heading text-[clamp(1.2rem,3vw,3rem)] font-extrabold uppercase leading-[0.88] tracking-[-0.12em] text-[var(--foreground)] text-balance max-sm:max-w-[12ch] max-sm:whitespace-normal max-sm:text-[clamp(2rem,7vw,3rem)]">
+                <span className="inline-block">{ABOUT_PAGE_STORY_DRR.nameLines.join(" ")}</span>
               </h2>
             </div>
 
