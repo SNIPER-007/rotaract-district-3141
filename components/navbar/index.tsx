@@ -19,7 +19,7 @@ const NAV_ITEMS = [
   { label: "About", href: "/about" },
   { label: "Leadership", href: "/leadership" },
   { label: "Events", href: "/events" },
-  { label: "Crowdfunding", href: "/crowdfunding" },
+  { label: "FundRaising", href: "/crowdfunding" },
 ] as const;
 
 function useLogoProximity(mouseX: number, mouseY: number, logoRef: RefObject<HTMLAnchorElement | null>) {

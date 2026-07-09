@@ -236,7 +236,7 @@ export function LeadershipPage({ data, rotaryMembers }: LeadershipPageProps) {
               <AccordionGroupSection
                 id="district-teams"
                 eyebrow="District Teams"
-                title="District Teams"
+                title="District Council Members"
                 groups={filteredDepartments}
                 openGroups={openDepartment ? [openDepartment] : []}
                 onToggle={(name) => {
@@ -250,14 +250,14 @@ export function LeadershipPage({ data, rotaryMembers }: LeadershipPageProps) {
                 <div className="space-y-4">
                   <div className="relative w-fit pl-1">
                     <p className="font-script text-[22px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-3deg]">
-                      Zone Representatives
+                      Zonal Representatives
                     </p>
                     <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[9rem] text-[var(--accent)]">
                       <path d="M2 11C18 7 35 12 52 9C69 6 88 9 105 8C123 7 142 10 178 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.75" />
                     </svg>
                   </div>
                   <h2 className="max-w-[20ch] font-heading text-[clamp(2.8rem,6vw,5rem)] font-extrabold uppercase leading-[0.94] tracking-[-0.05em] text-[var(--foreground)] text-balance">
-                    Zone Representatives
+                    Zonal Representatives
                   </h2>
                 </div>
 
@@ -269,7 +269,7 @@ export function LeadershipPage({ data, rotaryMembers }: LeadershipPageProps) {
                   </div>
                 ) : (
                   <p className="max-w-2xl text-[0.98rem] leading-[1.8] text-[var(--foreground)]/68">
-                    No zone representatives matched the current search.
+                    No zonal representatives matched the current search.
                   </p>
                 )}
               </div>

@@ -12,12 +12,26 @@ import Footer from "@/components/footer";
 import { Button } from "@/components/common/button";
 import { DonationCard } from "./DonationCard";
 import { DonationModal } from "./DonationModal";
+import { LiveDonationsTable } from "./LiveDonationsTable";
 import { SupportDistrict } from "./SupportDistrict";
 import { PROJECTS, type Project } from "@/data/projects";
+import { LIVE_DONATIONS, type LiveDonationDraft, type LiveDonationEntry } from "@/data/crowdfunding";
 
 export function CrowdfundingPage() {
   const prefersReducedMotion = useReducedMotion();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [liveDonations, setLiveDonations] = useState<readonly LiveDonationEntry[]>(() => [...LIVE_DONATIONS]);
+
+  const handleDonationSubmit = (draft: LiveDonationDraft) => {
+    setLiveDonations((currentDonations) => [
+      {
+        ...draft,
+        id: crypto.randomUUID(),
+        submittedAt: new Date().toISOString(),
+      },
+      ...currentDonations,
+    ]);
+  };
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
@@ -27,6 +41,8 @@ export function CrowdfundingPage() {
       <NoiseOverlay className="pointer-events-none fixed inset-0 z-0" opacity={0.03} />
 
       <div className="relative z-[1]">
+        <LiveDonationsTable donations={liveDonations} />
+
         <section className="relative overflow-hidden bg-[var(--background)] py-[clamp(4.5rem,8vw,7rem)] text-[var(--foreground)]">
           <Container className="max-w-[1440px] px-6 md:px-12 xl:px-20">
             <motion.div
@@ -131,7 +147,12 @@ export function CrowdfundingPage() {
         <Footer />
       </div>
 
-      <DonationModal open={Boolean(selectedProject)} project={selectedProject} onClose={() => setSelectedProject(null)} />
+      <DonationModal
+        open={Boolean(selectedProject)}
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+        onSubmit={handleDonationSubmit}
+      />
     </main>
   );
 }
