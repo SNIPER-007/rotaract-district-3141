@@ -75,12 +75,12 @@ export function Navbar({ mouseX, mouseY, isScrolled, compact = false }: NavbarPr
       animate={{ y: 0 }}
       transition={SPRINGS.soft}
     >
-      <Container className={`flex items-center gap-3 ${compact ? "h-16" : "h-20"}`}>
+      <Container className={`flex items-center gap-2 max-md:gap-1.5 ${compact ? "h-16 max-sm:h-14" : "h-20 max-sm:h-14"}`}>
         <motion.a
           ref={logoRef}
           href="/"
           aria-label="Rotaract District 3141 home"
-          className={`inline-flex items-center justify-center border border-[var(--border)] bg-[var(--foreground)] text-[var(--background)] shadow-[var(--shadow-xs)] outline-none transition-[background-color,color,border-radius,box-shadow] ${compact ? "h-9 w-16" : "h-11 w-20"}`}
+          className={`inline-flex items-center justify-center border border-[var(--border)] bg-[var(--foreground)] text-[var(--background)] shadow-[var(--shadow-xs)] outline-none transition-[background-color,color,border-radius,box-shadow] ${compact ? "h-9 w-16 max-sm:h-8 max-sm:w-14" : "h-11 w-20 max-sm:h-8 max-sm:w-14"}`}
           data-cursor-logo="true"
           data-cursor-logo-proximity={isNearLogo ? "true" : undefined}
           style={{
@@ -97,8 +97,8 @@ export function Navbar({ mouseX, mouseY, isScrolled, compact = false }: NavbarPr
           <span className={`font-semibold tracking-[0.32em] ${compact ? "text-[0.62rem]" : "text-[0.7rem]"}`}>RD</span>
         </motion.a>
 
-        <nav className="flex flex-1 justify-center overflow-x-auto">
-          <ul className={`flex items-center whitespace-nowrap px-2 font-medium text-[var(--foreground)]/78 ${compact ? "gap-1.5 text-[0.75rem] md:gap-3 lg:gap-4" : "gap-2 text-[0.82rem] md:gap-4 lg:gap-6"}`}>
+        <nav className="flex flex-1 justify-center overflow-x-auto max-md:justify-start">
+          <ul className={`flex items-center whitespace-nowrap px-2 font-medium text-[var(--foreground)]/78 ${compact ? "gap-1.5 text-[0.75rem] max-sm:gap-1 max-sm:text-[0.68rem] md:gap-3 lg:gap-4" : "gap-2 text-[0.82rem] max-sm:gap-1 max-sm:text-[0.68rem] md:gap-4 lg:gap-6"}`}>
             {NAV_ITEMS.map((item) => (
               <li key={item.label}>
                 {(() => {
@@ -108,7 +108,7 @@ export function Navbar({ mouseX, mouseY, isScrolled, compact = false }: NavbarPr
                     <motion.a
                       href={item.href}
                       aria-current={isActive ? "page" : undefined}
-                      className={`relative inline-flex items-center rounded-full transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--selection)] ${compact ? "px-2.5 py-1.5" : "px-3 py-2"} ${isActive ? "bg-[color-mix(in_srgb,var(--accent)_8%,white)] text-[var(--foreground)] shadow-[0_10px_22px_rgba(0,87,255,0.08)]" : ""}`}
+                      className={`relative inline-flex items-center rounded-full transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--selection)] ${compact ? "px-2.5 py-1.5 max-sm:px-2 max-sm:py-1.25" : "px-3 py-2 max-sm:px-2 max-sm:py-1.25"} ${isActive ? "bg-[color-mix(in_srgb,var(--accent)_8%,white)] text-[var(--foreground)] shadow-[0_10px_22px_rgba(0,87,255,0.08)]" : ""}`}
                       data-cursor-button="true"
                       whileHover={{ y: -1 }}
                       transition={SPRINGS.soft}

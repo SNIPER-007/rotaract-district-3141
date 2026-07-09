@@ -150,6 +150,46 @@ body {
   margin: 0;
 }
 
+@media (max-width: 639px) {
+  main h1,
+  main h2,
+  main h3 {
+    letter-spacing: -0.05em !important;
+    text-wrap: balance;
+  }
+
+  main h1 {
+    font-size: clamp(2.4rem, 12vw, 4rem) !important;
+    line-height: 0.94 !important;
+  }
+
+  main h2 {
+    font-size: clamp(1.95rem, 9vw, 3rem) !important;
+    line-height: 0.96 !important;
+  }
+
+  main h3 {
+    font-size: clamp(1.1rem, 5vw, 1.5rem) !important;
+    line-height: 1.02 !important;
+  }
+
+  main section,
+  main footer {
+    scroll-margin-top: 5rem;
+    padding-top: clamp(2.5rem, 8vw, 4rem) !important;
+    padding-bottom: clamp(2.5rem, 8vw, 4rem) !important;
+  }
+
+  main p,
+  main li {
+    line-height: 1.65;
+  }
+
+  main table {
+    font-size: 0.9rem;
+  }
+}
+
 body,
 h1,
 h2,

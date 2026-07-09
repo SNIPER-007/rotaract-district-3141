@@ -24,7 +24,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = [
-    "inline-flex items-center justify-center rounded-[var(--radius)] px-[calc(var(--space-4)+0.25rem)] py-[calc(var(--space-2)+0.125rem)] transition-[background-color,color,border-color,opacity,box-shadow,transform] duration-[220ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+    "inline-flex items-center justify-center rounded-[var(--radius)] px-4 py-2 text-[0.96rem] transition-[background-color,color,border-color,opacity,box-shadow,transform] duration-[220ms] ease-[cubic-bezier(0.16,1,0.3,1)] max-sm:px-3 max-sm:py-2 max-sm:text-[0.9rem]",
     variantClasses[variant],
     disabled ? "cursor-not-allowed opacity-50" : "",
     className,
