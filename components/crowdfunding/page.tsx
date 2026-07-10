@@ -139,11 +139,11 @@ export function CrowdfundingPage() {
               </p>
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {/*<div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               {underTenThousandProjects.map((project) => (
                 <DonationCard key={project.title} project={project} onDonate={setSelectedProject} />
               ))}
-            </div>
+            </div>*/}
           </Container>
         </section>
 
@@ -166,11 +166,11 @@ export function CrowdfundingPage() {
               </p>
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {/*<div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               {overTenThousandProjects.map((project) => (
                 <DonationCard key={project.title} project={project} onDonate={setSelectedProject} />
               ))}
-            </div>
+            </div>*/}
           </Container>
         </section>
 
