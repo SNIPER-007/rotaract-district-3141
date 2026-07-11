@@ -132,10 +132,10 @@ export function CrowdfundingPage() {
                 </svg>
               </div>
               <h2 className="max-w-[20ch] font-heading text-[clamp(2.8rem,6vw,5rem)] font-extrabold uppercase leading-[0.94] tracking-[-0.05em] text-[var(--foreground)] text-balance">
-                Donations Under ₹10,000
+                Support a Cause
               </h2>
               <p className="max-w-[700px] text-[0.98rem] leading-[1.8] text-[var(--foreground)]/70">
-                Use this section for smaller club-level drives where any amount below ₹10,000 helps build momentum quickly.
+                Use this section for smaller drives where any amount helps build momentum quickly.
               </p>
             </div>
 
@@ -159,10 +159,10 @@ export function CrowdfundingPage() {
                 </svg>
               </div>
               <h2 className="max-w-[22ch] font-heading text-[clamp(2.8rem,6vw,5rem)] font-extrabold uppercase leading-[0.94] tracking-[-0.05em] text-[var(--foreground)] text-balance">
-                Donations ₹10,000 And Above
+                Fund a Project
               </h2>
               <p className="max-w-[700px] text-[0.98rem] leading-[1.8] text-[var(--foreground)]/70">
-                Use this section for larger district-scale campaigns where a minimum donation of ₹10,000 helps reach major fundraising goals faster.
+                Use this section for larger campaigns where a donation helps reach major fundraising goals faster.
               </p>
             </div>
 
