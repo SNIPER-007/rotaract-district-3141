@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -38,6 +39,7 @@ function useViewport() {
 }
 
 export function LandingExperience() {
+  const router = useRouter();
   const sectionRef = useRef<HTMLElement>(null);
   const landingEndRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
@@ -181,8 +183,28 @@ export function LandingExperience() {
     };
   }, [mousePosition, prefersReducedMotion, viewport.height, viewport.width]);
 
-  const scrollToLandingEnd = () => {
-    landingEndRef.current?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "end" });
+  const scrollToImpact = () => {
+    const header = document.querySelector("header");
+    const navbarHeight = header ? header.offsetHeight : 80;
+    const lenis = (window as any).lenis;
+
+    if (lenis) {
+      lenis.scrollTo("#impact", { offset: -navbarHeight });
+    } else {
+      const impactSection = document.getElementById("impact");
+      if (impactSection) {
+        const rect = impactSection.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        window.scrollTo({
+          top: rect.top + scrollTop - navbarHeight,
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+        });
+      }
+    }
+  };
+
+  const handleMeetLeaders = () => {
+    router.push("/leadership");
   };
 
   return (
@@ -206,8 +228,8 @@ export function LandingExperience() {
             mouseY={mousePosition.y}
             viewportWidth={viewport.width}
             viewportHeight={viewport.height}
-            onPrimaryAction={scrollToLandingEnd}
-            onSecondaryAction={scrollToLandingEnd}
+            onPrimaryAction={scrollToImpact}
+            onSecondaryAction={handleMeetLeaders}
           />
 
           <motion.div

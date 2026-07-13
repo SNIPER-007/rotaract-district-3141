@@ -1,8 +1,8 @@
 import { Container } from "@/components/common/container";
 
 const QUICK_LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
+  { label: "Home", href: "/#home" },
+  { label: "About", href: "/#about" },
   { label: "Leadership", href: "/leadership" },
   { label: "Events", href: "/events" },
   { label: "Crowdfunding", href: "/crowdfunding" },
