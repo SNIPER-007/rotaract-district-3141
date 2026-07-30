@@ -64,10 +64,10 @@ export function ContactPreview() {
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20">
           <div className="space-y-5">
             <div className="relative w-fit pl-2">
-              <p className="font-script text-[20px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-2deg]">
+              <p className="font-script text-[20px] font-medium tracking-[0.01em] text-[var(--district-cranberry)] rotate-[-2deg]">
                 {CONTACT_PREVIEW_CONTENT.eyebrow}
               </p>
-              <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[8.5rem] text-[var(--accent)]">
+              <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[8.5rem] text-[var(--district-cranberry)]">
                 <path d="M2 11C18 7 35 12 52 9C69 6 88 9 105 8C123 7 142 10 178 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.75" />
               </svg>
             </div>

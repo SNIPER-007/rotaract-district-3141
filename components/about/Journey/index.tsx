@@ -44,7 +44,7 @@ export function Journey() {
 
               {index < ABOUT_PAGE_STORY_JOURNEY.cards.length - 1 ? (
                 <div className={`mt-6 flex items-center justify-center ${index % 2 === 0 ? "lg:justify-start lg:pl-12" : "lg:justify-end lg:pr-12"}`}>
-                  <div className="flex items-center gap-3 text-[var(--accent)]/35">
+                  <div className="flex items-center gap-3 text-[var(--district-cranberry)]/35">
                     <span className="font-script text-[22px] font-medium rotate-[-3deg]">
                       {index === 0 ? "Every step mattered." : index === 1 ? "Growing together." : "One District."}
                     </span>

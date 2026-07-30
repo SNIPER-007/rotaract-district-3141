@@ -19,7 +19,7 @@ interface FloatingStickerProps {
 
 const variantStyles: Record<FloatingStickerVariant, string> = {
   default: "border-white/60 bg-white/85 text-[var(--foreground)] shadow-[0_8px_30px_rgba(17,17,17,0.06)]",
-  accent: "border-transparent bg-[var(--accent)]/10 text-[var(--accent)] shadow-[0_8px_30px_rgba(0,87,255,0.1)]",
+  accent: "border-transparent bg-[var(--district-cranberry)]/10 text-[var(--district-cranberry)] shadow-[0_8px_30px_rgba(0,87,255,0.1)]",
   dark: "border-transparent bg-[var(--foreground)] text-[var(--background)] shadow-[0_8px_30px_rgba(17,17,17,0.14)]",
   outline: "border-[rgba(17,17,17,0.12)] bg-transparent text-[var(--foreground)]",
   glass: "border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_76%,transparent)] text-[var(--foreground)] shadow-[var(--shadow-sm)] backdrop-blur-xl",

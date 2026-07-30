@@ -167,7 +167,7 @@ export function AboutPage() {
         <Container>
           <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-stretch">
             <div className="rounded-[2rem] border border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_88%,transparent)] p-5 shadow-[var(--shadow-lg)]">
-              <div data-about-drr="card" className="h-full rounded-[1.5rem] border border-[rgba(17,17,17,0.06)] bg-[linear-gradient(180deg,color-mix(in_srgb,var(--accent)_10%,var(--surface))_0%,var(--surface)_42%,color-mix(in_srgb,var(--secondary)_8%,var(--surface))_100%)] p-5 sm:p-6">
+              <div data-about-drr="card" className="h-full rounded-[1.5rem] border border-[rgba(17,17,17,0.06)] bg-[linear-gradient(180deg,color-mix(in_srgb,var(--district-cranberry)_10%,var(--surface))_0%,var(--surface)_42%,color-mix(in_srgb,var(--secondary)_8%,var(--surface))_100%)] p-5 sm:p-6">
                 <div className="flex items-center justify-between text-[0.66rem] font-semibold uppercase tracking-[0.32em] text-[var(--foreground)]/55">
                   <span>{ABOUT_PAGE_DRR.eyebrow}</span>
                   <span>{ABOUT_PAGE_DRR.title}</span>

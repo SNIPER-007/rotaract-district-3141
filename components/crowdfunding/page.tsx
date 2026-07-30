@@ -55,10 +55,10 @@ export function CrowdfundingPage() {
             >
               <div className="space-y-6">
                 <div className="relative w-fit pl-1">
-                  <p className="font-script text-[22px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-3deg]">
+                  <p className="font-script text-[22px] font-medium tracking-[0.01em] text-[var(--district-cranberry)] rotate-[-3deg]">
                     Support District
                   </p>
-                  <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[9rem] text-[var(--accent)]">
+                  <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[9rem] text-[var(--district-cranberry)]">
                     <path d="M2 11C18 7 35 12 52 9C69 6 88 9 105 8C123 7 142 10 178 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.75" />
                   </svg>
                 </div>
@@ -91,10 +91,10 @@ export function CrowdfundingPage() {
 
               <div className="rounded-[34px] border border-[rgba(0,0,0,0.06)] bg-[linear-gradient(180deg,#fbf6ec_0%,#fffdf8_100%)] p-6 shadow-[0_18px_44px_rgba(0,0,0,0.06)] md:p-8">
                 <div className="space-y-4">
-                  <p className="font-script text-[22px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-3deg]">
+                  <p className="font-script text-[22px] font-medium tracking-[0.01em] text-[var(--district-cranberry)] rotate-[-3deg]">
                     Every Rupee Matters.
                   </p>
-                  <svg aria-hidden="true" viewBox="0 0 180 18" className="h-3 w-[9rem] text-[var(--accent)]">
+                  <svg aria-hidden="true" viewBox="0 0 180 18" className="h-3 w-[9rem] text-[var(--district-cranberry)]">
                     <path d="M2 11C18 7 35 12 52 9C69 6 88 9 105 8C123 7 142 10 178 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.75" />
                   </svg>
                 </div>
@@ -124,10 +124,10 @@ export function CrowdfundingPage() {
           <Container className="max-w-[1440px] px-6 md:px-12 xl:px-20">
             <div className="mb-8 space-y-4">
               <div className="relative w-fit pl-2">
-                <p className="font-script text-[20px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-2deg]">
+                <p className="font-script text-[20px] font-medium tracking-[0.01em] text-[var(--district-cranberry)] rotate-[-2deg]">
                   Rotaract Clubs
                 </p>
-                <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[8.5rem] text-[var(--accent)]">
+                <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[8.5rem] text-[var(--district-cranberry)]">
                   <path d="M2 11C18 7 35 12 52 9C69 6 88 9 105 8C123 7 142 10 178 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.75" />
                 </svg>
               </div>
@@ -151,10 +151,10 @@ export function CrowdfundingPage() {
           <Container className="max-w-[1440px] px-6 md:px-12 xl:px-20">
             <div className="mb-8 space-y-4">
               <div className="relative w-fit pl-2">
-                <p className="font-script text-[20px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-2deg]">
+                <p className="font-script text-[20px] font-medium tracking-[0.01em] text-[var(--district-cranberry)] rotate-[-2deg]">
                   Rotaract District
                 </p>
-                <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[8.5rem] text-[var(--accent)]">
+                <svg aria-hidden="true" viewBox="0 0 180 18" className="mt-1 h-3 w-[8.5rem] text-[var(--district-cranberry)]">
                   <path d="M2 11C18 7 35 12 52 9C69 6 88 9 105 8C123 7 142 10 178 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.75" />
                 </svg>
               </div>

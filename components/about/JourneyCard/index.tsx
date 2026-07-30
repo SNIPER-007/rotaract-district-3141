@@ -82,7 +82,7 @@ export function JourneyCard({
           {description}
         </p>
         <div className="flex items-center gap-3 text-[var(--foreground)]/45">
-          <span className="font-script text-[22px] font-medium text-[var(--accent)] rotate-[-3deg]">
+          <span className="font-script text-[22px] font-medium text-[var(--district-cranberry)] rotate-[-3deg]">
             {note}
           </span>
         </div>

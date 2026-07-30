@@ -23,7 +23,7 @@ export function TimelineRow({ icon: Icon, title, description, pill }: TimelineRo
       whileHover={prefersReducedMotion ? undefined : { y: -3 }}
     >
       <div className="flex items-center gap-4">
-        <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(0,0,0,0.05)] bg-white shadow-[0_8px_20px_rgba(0,0,0,0.04)] transition-colors group-hover:bg-[color-mix(in_srgb,var(--accent)_8%,white)] group-hover:text-[var(--accent)]">
+        <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(0,0,0,0.05)] bg-white shadow-[0_8px_20px_rgba(0,0,0,0.04)] transition-colors group-hover:bg-[color-mix(in_srgb,var(--district-cranberry)_8%,white)] group-hover:text-[var(--district-cranberry)]">
           <Icon size={18} />
         </span>
         <h3 className="font-heading text-[clamp(1.3rem,2.2vw,2rem)] font-bold uppercase tracking-[-0.04em] text-[var(--foreground)]">
@@ -34,7 +34,7 @@ export function TimelineRow({ icon: Icon, title, description, pill }: TimelineRo
         {description}
       </p>
       <div className="justify-self-start md:justify-self-end">
-        <span className="inline-flex rounded-full border border-[rgba(0,0,0,0.06)] bg-[color-mix(in_srgb,var(--surface)_90%,transparent)] px-4 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[var(--foreground)]/60 transition-colors group-hover:bg-[color-mix(in_srgb,var(--accent)_10%,white)] group-hover:text-[var(--accent)]">
+        <span className="inline-flex rounded-full border border-[rgba(0,0,0,0.06)] bg-[color-mix(in_srgb,var(--surface)_90%,transparent)] px-4 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[var(--foreground)]/60 transition-colors group-hover:bg-[color-mix(in_srgb,var(--district-cranberry)_10%,white)] group-hover:text-[var(--district-cranberry)]">
           {pill}
         </span>
       </div>

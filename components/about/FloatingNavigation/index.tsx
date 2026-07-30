@@ -42,11 +42,11 @@ export function FloatingNavigation({ items, activeId, onNavigate }: FloatingNavi
               onClick={() => onNavigate(item.id)}
               className={`flex w-[3.9rem] flex-col items-center gap-1 rounded-[14px] px-1.5 py-1.5 text-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 isActive
-                  ? "bg-[color-mix(in_srgb,var(--accent)_10%,white)] text-[var(--foreground)] shadow-[0_8px_18px_rgba(0,87,255,0.12)]"
+                  ? "bg-[color-mix(in_srgb,var(--district-cranberry)_10%,white)] text-[var(--foreground)] shadow-[0_8px_18px_rgba(0,87,255,0.12)]"
                   : "text-[var(--foreground)]/66 hover:bg-[color-mix(in_srgb,var(--surface)_90%,transparent)] hover:text-[var(--foreground)]"
               }`}
             >
-              <span className={`inline-flex h-7 w-7 items-center justify-center rounded-full border ${isActive ? "border-[rgba(0,87,255,0.14)] bg-white text-[var(--accent)]" : "border-[rgba(0,0,0,0.06)] bg-[color-mix(in_srgb,var(--surface)_95%,transparent)] text-[var(--foreground)]/66"}`}>
+              <span className={`inline-flex h-7 w-7 items-center justify-center rounded-full border ${isActive ? "border-[rgba(0,87,255,0.14)] bg-white text-[var(--district-cranberry)]" : "border-[rgba(0,0,0,0.06)] bg-[color-mix(in_srgb,var(--surface)_95%,transparent)] text-[var(--foreground)]/66"}`}>
                 <Icon size={14} />
               </span>
               <span className="text-[0.58rem] font-semibold uppercase tracking-[0.18em] leading-none">

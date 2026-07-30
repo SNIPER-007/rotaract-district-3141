@@ -29,7 +29,7 @@ export default function Footer() {
           </div>
 
           <div className="space-y-4">
-            <p className="font-script text-[20px] font-medium text-[var(--accent)] rotate-[-2deg] max-sm:text-[18px]">
+            <p className="font-script text-[20px] font-medium text-[var(--district-cranberry)] rotate-[-2deg] max-sm:text-[18px]">
               Navigation
             </p>
             <ul className="space-y-3 text-[0.96rem] text-[var(--foreground)]/74 max-sm:space-y-2 max-sm:text-[0.88rem]">
@@ -44,7 +44,7 @@ export default function Footer() {
           </div>
 
           <div className="space-y-4">
-            <p className="font-script text-[20px] font-medium text-[var(--accent)] rotate-[2deg] max-sm:text-[18px]">
+            <p className="font-script text-[20px] font-medium text-[var(--district-cranberry)] rotate-[2deg] max-sm:text-[18px]">
               Social
             </p>
             <div className="flex items-center gap-3 max-sm:gap-2">

@@ -249,7 +249,7 @@ export function AboutUsSection() {
                 lineColor="0, 87, 255"
               />
               <div className="relative aspect-[4/5] min-h-[28rem] p-5 sm:p-6">
-                <div className="flex h-full flex-col justify-between rounded-[1.5rem] border border-[rgba(255,255,255,0.5)] bg-[linear-gradient(180deg,color-mix(in_srgb,var(--accent)_14%,white)_0%,color-mix(in_srgb,var(--surface)_92%,white)_58%,color-mix(in_srgb,var(--accent)_8%,var(--surface))_100%)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] sm:p-6">
+                <div className="flex h-full flex-col justify-between rounded-[1.5rem] border border-[rgba(255,255,255,0.5)] bg-[linear-gradient(180deg,color-mix(in_srgb,var(--district-cranberry)_14%,white)_0%,color-mix(in_srgb,var(--surface)_92%,white)_58%,color-mix(in_srgb,var(--district-cranberry)_8%,var(--surface))_100%)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] sm:p-6">
                   <div className="flex items-center justify-between text-[0.66rem] font-semibold uppercase tracking-[0.32em] text-[var(--foreground)]/55">
                     <span>DRR</span>
                     <span>2026–27</span>
@@ -257,11 +257,11 @@ export function AboutUsSection() {
 
                   <div className="relative mx-auto flex w-full max-w-[18rem] flex-1 items-center justify-center py-8 sm:max-w-[20rem]">
                     <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0.14)_48%,transparent_74%)] blur-2xl" />
-                    <div className="absolute inset-x-10 bottom-10 h-20 rounded-full bg-[color-mix(in_srgb,var(--accent)_18%,transparent)] blur-3xl" />
+                    <div className="absolute inset-x-10 bottom-10 h-20 rounded-full bg-[color-mix(in_srgb,var(--district-cranberry)_18%,transparent)] blur-3xl" />
                     <div className="relative flex h-[20rem] w-full items-center justify-center overflow-hidden rounded-[1.75rem] border border-[rgba(255,255,255,0.42)] bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(250,248,245,0.82)_48%,rgba(230,238,255,0.7)_100%)] shadow-[var(--shadow-md)]">
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,87,255,0.12),transparent_38%),radial-gradient(circle_at_bottom,rgba(0,87,255,0.1),transparent_40%)]" />
                       <div className="relative flex h-40 w-40 items-center justify-center rounded-full border border-[rgba(17,17,17,0.08)] bg-[color-mix(in_srgb,var(--surface)_92%,transparent)] shadow-[var(--shadow-sm)]">
-                        <div className="flex h-32 w-32 items-center justify-center rounded-full bg-[linear-gradient(180deg,color-mix(in_srgb,var(--accent)_18%,white)_0%,color-mix(in_srgb,var(--surface)_96%,white)_100%)] text-center text-[0.72rem] font-semibold uppercase tracking-[0.36em] text-[var(--foreground)]/50">
+                        <div className="flex h-32 w-32 items-center justify-center rounded-full bg-[linear-gradient(180deg,color-mix(in_srgb,var(--district-cranberry)_18%,white)_0%,color-mix(in_srgb,var(--surface)_96%,white)_100%)] text-center text-[0.72rem] font-semibold uppercase tracking-[0.36em] text-[var(--foreground)]/50">
                           {ABOUT_US_CONTENT.representative.portraitLabel}
                         </div>
                       </div>

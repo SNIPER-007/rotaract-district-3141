@@ -7,9 +7,10 @@ html[data-theme="light"] {
   --foreground: #111111;
   --surface: #ffffff;
   --surface-muted: #f3eee6;
-  --accent: #0057ff;
+  --accent: #DB5079;
+  --district-cranberry: #DB5079;
   --accent-foreground: #ffffff;
-  --secondary: #d4af37;
+  --secondary: #0143f7;
   --secondary-foreground: #111111;
   --border: rgba(17, 17, 17, 0.08);
   --muted: rgba(17, 17, 17, 0.64);

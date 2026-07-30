@@ -67,7 +67,7 @@ export function LiveDonationsTable({ donations }: LiveDonationsTableProps) {
         >
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="space-y-2">
-              <p className="font-script text-[20px] font-medium tracking-[0.01em] text-[var(--accent)] rotate-[-2deg]">
+              <p className="font-script text-[20px] font-medium tracking-[0.01em] text-[var(--district-cranberry)] rotate-[-2deg]">
                 Live Donations
               </p>
               <h2 className="font-heading text-[clamp(2rem,4.4vw,3.6rem)] font-extrabold uppercase leading-[0.94] tracking-[-0.05em] text-[var(--foreground)] text-balance">

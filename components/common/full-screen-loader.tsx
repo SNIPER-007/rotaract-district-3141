@@ -113,7 +113,7 @@ export function FullScreenLoader({
       transition={{ duration: 0.35, ease: ANIMATION_EASING.standard }}
       style={{ pointerEvents: "none" }}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_color-mix(in_srgb,var(--accent)_12%,transparent)_0%,_transparent_62%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_color-mix(in_srgb,var(--district-cranberry)_12%,transparent)_0%,_transparent_62%)]" />
       <GridBackground
         className="absolute inset-0 opacity-75"
         cellSize={48}
