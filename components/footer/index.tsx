@@ -1,4 +1,12 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Settings2 } from "lucide-react";
 import { Container } from "@/components/common/container";
+import { subscribeToAuthStateChanged } from "@/lib/firebase/auth";
+import { isAuthorizedAdminIdentity } from "@/lib/firebase/admin";
 
 const QUICK_LINKS = [
   { label: "Home", href: "/#home" },
@@ -10,6 +18,28 @@ const QUICK_LINKS = [
 const SOCIAL_LINKS = ["Instagram", "Facebook", "LinkedIn"] as const;
 
 export default function Footer() {
+  const router = useRouter();
+  const [adminPath, setAdminPath] = useState("/admin/login");
+
+  useEffect(() => {
+    return subscribeToAuthStateChanged((user) => {
+      if (!user) {
+        setAdminPath("/admin/login");
+        return;
+      }
+
+      void (async () => {
+        const authorized = await isAuthorizedAdminIdentity({ email: user.email, uid: user.uid });
+        setAdminPath(authorized ? "/admin/dashboard" : "/admin/login");
+      })();
+    });
+  }, []);
+
+  const handleAdminClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    router.push(adminPath);
+  };
+
   return (
     <footer id="footer" className="relative -mt-[56px] overflow-hidden rounded-t-[56px] bg-[var(--background)] py-[clamp(3.5rem,7vw,5.5rem)] text-[var(--foreground)] max-sm:-mt-10 max-sm:rounded-t-[32px] max-sm:py-12">
       <Container className="max-w-[1440px] px-6 md:px-12 xl:px-20">
@@ -59,6 +89,18 @@ export default function Footer() {
             </p>
           </div>
         </div>
+
+    <div className="mt-8 flex justify-end border-t border-[var(--border)] pt-4">
+      <Link
+        href={adminPath}
+        onClick={handleAdminClick}
+        className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_82%,transparent)] px-3 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--foreground)]/70 transition-colors hover:text-[var(--foreground)]"
+        aria-label="Admin"
+      >
+        <Settings2 size={14} strokeWidth={2} />
+        <span>Admin</span>
+      </Link>
+    </div>
       </Container>
     </footer>
   );

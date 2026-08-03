@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Button } from "@/components/common/button";
-import { EVENT_FOLDERS } from "@/data/events";
+import { collection, db, onSnapshot, orderBy, query } from "@/lib/firebase/firestore";
+import type { HomeFolderStackEvent } from "@/components/home/FolderStack/folder-card";
 
 const FEATURED_EVENT_COUNT = 3;
 
@@ -14,8 +14,36 @@ export function EventsSlider() {
   const prefersReducedMotion = useReducedMotion();
   const sliderRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [featuredEvents, setFeaturedEvents] = useState<readonly HomeFolderStackEvent[]>([]);
 
-  const featuredEvents = useMemo(() => EVENT_FOLDERS.slice(0, FEATURED_EVENT_COUNT), []);
+  useEffect(() => {
+    const eventQuery = query(collection(db, "homeEvents"), orderBy("order", "asc"));
+
+    return onSnapshot(eventQuery, (snapshot) => {
+      setFeaturedEvents(
+        snapshot.docs.slice(0, FEATURED_EVENT_COUNT).map((document, index) => {
+          const data = document.data() as Partial<HomeFolderStackEvent> & {
+            tabLabel?: string;
+            location?: string;
+            cta?: string;
+            active?: boolean;
+          };
+
+          return {
+            tabLabel: data.tabLabel ?? `Event ${index + 1}`,
+            title: data.title ?? document.id,
+            date: data.date ?? "",
+            location: data.location ?? "",
+            description: data.description ?? "",
+            image: data.image ?? "/placeholders/folder-event-placeholder.svg",
+            color: data.color ?? "var(--accent)",
+            cta: data.cta ?? "Learn More",
+            active: data.active ?? index === 0,
+          };
+        }),
+      );
+    });
+  }, []);
 
   useEffect(() => {
     const node = sliderRef.current;
@@ -115,7 +143,7 @@ export function EventsSlider() {
       >
         {featuredEvents.map((event, index) => (
           <motion.article
-            key={`${event.category}-${event.folderLabel}-${event.title}`}
+            key={event.tabLabel}
             data-event-card="true"
             className="min-w-[min(86vw,26rem)] snap-center overflow-hidden rounded-[2rem] border border-[rgba(0,0,0,0.06)] bg-white shadow-[0_16px_40px_rgba(0,0,0,0.05)] md:min-w-[24rem] lg:min-w-[26rem]"
             initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
@@ -125,7 +153,7 @@ export function EventsSlider() {
           >
             <div className="relative aspect-[16/10] overflow-hidden bg-[linear-gradient(180deg,rgba(0,87,255,0.08),rgba(0,87,255,0.02))]">
               <Image
-                src={event.cover}
+                src={event.image}
                 alt={event.title}
                 fill
                 sizes="(min-width: 1024px) 26rem, 86vw"
@@ -152,7 +180,7 @@ export function EventsSlider() {
 
               <div className="flex items-center justify-between gap-3">
                 <p className="text-[0.74rem] font-semibold uppercase tracking-[0.24em] text-[var(--foreground)]/52">
-                  {event.venue}
+                  {event.location}
                 </p>
                 <Link href="/events" className="inline-flex h-11 items-center rounded-full border border-[rgba(0,0,0,0.08)] bg-[var(--background)] px-4 text-[0.76rem] font-medium text-[var(--foreground)] transition-shadow hover:shadow-[0_12px_24px_rgba(17,17,17,0.08)]">
                   View Events
@@ -166,7 +194,7 @@ export function EventsSlider() {
       <div className="flex items-center gap-2 px-1">
         {featuredEvents.map((event, index) => (
           <button
-            key={`${event.category}-${event.folderLabel}-dot`}
+            key={`${event.tabLabel}-dot`}
             type="button"
             onClick={() => scrollToIndex(index)}
             className={`h-2.5 rounded-full transition-all duration-300 ${index === activeIndex ? "w-10 bg-[var(--foreground)]" : "w-2.5 bg-[var(--foreground)]/20"}`}

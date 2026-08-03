@@ -5,8 +5,9 @@ import { useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
 import { Container } from "@/components/common/container";
 import { SegmentedToggle } from "@/components/common/segmented-toggle";
-import { EVENT_CATEGORY_OPTIONS, EVENT_FOLDERS, type EventCategory, type EventFolder } from "@/data/events";
+import { EVENT_CATEGORY_OPTIONS, type EventCategory, type EventFolder } from "@/data/events";
 import { FolderCard } from "@/components/events/folder-card";
+import { collection, db, onSnapshot, orderBy, query } from "@/lib/firebase/firestore";
 
 interface FolderExplorerProps {
   className?: string;
@@ -24,17 +25,61 @@ function getDefaultState(): FolderState {
   };
 }
 
-function getCategoryFolders(category: EventCategory) {
-  return EVENT_FOLDERS.filter((folder) => folder.category === category);
+function mapDocumentToFolder(document: { id: string; data: () => Record<string, unknown> }, fallbackCategory: EventCategory): EventFolder {
+  const data = document.data();
+
+  return {
+    category: (data.category as EventCategory) ?? fallbackCategory,
+    folderLabel: (data.folderLabel as string) ?? document.id,
+    title: (data.title as string) ?? document.id,
+    date: (data.date as string) ?? "",
+    venue: (data.venue as string) ?? "",
+    description: (data.description as string) ?? "",
+    cover: (data.cover as string) ?? "/placeholders/folder-event-placeholder.svg",
+    gallery: (data.gallery as string[]) ?? [],
+    registrationLink: (data.registrationLink as string) ?? "#",
+    color: (data.color as string) ?? "var(--accent)",
+  };
 }
 
 export function FolderExplorer({ className = "" }: FolderExplorerProps) {
   const prefersReducedMotion = useReducedMotion();
   const [category, setCategory] = useState<EventCategory>("Rotaract District");
   const [folderState, setFolderState] = useState<FolderState>(getDefaultState);
+  const [districtFolders, setDistrictFolders] = useState<readonly EventFolder[]>([]);
+  const [clubFolders, setClubFolders] = useState<readonly EventFolder[]>([]);
+  const [rotaryFolders, setRotaryFolders] = useState<readonly EventFolder[]>([]);
   const stackRef = useRef<HTMLDivElement>(null);
 
-  const folders = useMemo(() => getCategoryFolders(category), [category]);
+  useEffect(() => {
+    const unsubscribers = [
+      onSnapshot(query(collection(db, "districtEvents"), orderBy("order", "asc")), (snapshot) => {
+        setDistrictFolders(snapshot.docs.map((document) => mapDocumentToFolder(document, "Rotaract District")));
+      }),
+      onSnapshot(query(collection(db, "clubEvents"), orderBy("order", "asc")), (snapshot) => {
+        setClubFolders(snapshot.docs.map((document) => mapDocumentToFolder(document, "Rotaract Clubs")));
+      }),
+      onSnapshot(query(collection(db, "rotaryEvents"), orderBy("order", "asc")), (snapshot) => {
+        setRotaryFolders(snapshot.docs.map((document) => mapDocumentToFolder(document, "Rotary District")));
+      }),
+    ];
+
+    return () => {
+      unsubscribers.forEach((unsubscribe) => unsubscribe());
+    };
+  }, []);
+
+  const folders = useMemo(() => {
+    if (category === "Rotaract District") {
+      return districtFolders;
+    }
+
+    if (category === "Rotary District") {
+      return rotaryFolders;
+    }
+
+    return clubFolders;
+  }, [category, clubFolders, districtFolders, rotaryFolders]);
   const activeIndex = Math.min(folderState[category] ?? 0, Math.max(folders.length - 1, 0));
   const activeFolder = folders[activeIndex] ?? folders[0];
 

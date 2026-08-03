@@ -4,7 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
 import { Container } from "@/components/common/container";
-import { createPinnedStoryTimeline, overlapStep, staggerStep } from "@/lib/scroll-story";
+import { createPinnedStoryTimeline, overlapStep } from "@/lib/scroll-story";
+import { collection, onSnapshot, orderBy, query, db } from "@/lib/firebase/firestore";
 import { FolderCard, type HomeFolderStackEvent } from "./folder-card";
 
 interface FolderStackProps {
@@ -12,59 +13,55 @@ interface FolderStackProps {
   className?: string;
 }
 
-const HOME_EVENTS: readonly HomeFolderStackEvent[] = [
-  {
-    tabLabel: "Safar",
-    title: "Event 1",
-    date: "23rd August 2026",
-    location: "Bandra Fort",
-    description:
-      "SAFAR is a Rotaract District 3141 marathon supporting cervical cancer vaccination for underprivileged communities, promoting awareness, hope, healthier lives, and meaningful impact together.",
-    image: "/placeholders/safar-resizex-1140.jpg",
-    color: "var(--accent)",
-    cta: "Learn More",
-    active: true,
-  },
-  {
-    tabLabel: "L.A.N.S Q1",
-    title: "Event 2",
-    date: "5th July 2026",
-    location: "Sathaye College",
-    description:
-      "LANS is a Rotaract District 3141 initiative where every quarter introduces a unique sport, promoting fitness, learning, teamwork, and lifelong sporting experiences.",
-    image: "/placeholders/lans.png",
-    color: "var(--secondary)",
-    cta: "Learn More",
-    active: false,
-  },
-  {
-    tabLabel: "Jersey XI",
-    title: "Event 3",
-    date: "17th May 2026",
-    location: "Kohinoor Turf, Kurla",
-    description:
-      "Jersey XI is a Rotaract District 3141 cricket tournament featuring exciting power cards and innovative rule twists, redefining the game with strategy and fun.",
-    image: "/placeholders/jerseyxi.jpg",
-    color: "color-mix(in srgb, var(--foreground) 18%, var(--accent) 82%)",
-    cta: "Learn More",
-    active: false,
-  },
-];
-
-export function FolderStack({ events = HOME_EVENTS, className = "" }: FolderStackProps) {
-  const visibleEvents = useMemo(() => events.slice(0, 3), [events]);
+export function FolderStack({ events, className = "" }: FolderStackProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [firestoreEvents, setFirestoreEvents] = useState<HomeFolderStackEvent[] | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
-  const activeEvent = visibleEvents[activeIndex] ?? visibleEvents[0];
+  useEffect(() => {
+    const eventQuery = query(collection(db, "homeEvents"), orderBy("order", "asc"));
+
+    return onSnapshot(eventQuery, (snapshot) => {
+      setFirestoreEvents(
+        snapshot.docs.map((document, index) => {
+          const data = document.data() as Partial<HomeFolderStackEvent> & {
+            tabLabel?: string;
+            location?: string;
+            cta?: string;
+            active?: boolean;
+          };
+
+          return {
+            tabLabel: data.tabLabel ?? `Event ${index + 1}`,
+            title: data.title ?? document.id,
+            date: data.date ?? "",
+            location: data.location ?? "",
+            description: data.description ?? "",
+            image: data.image ?? "/placeholders/folder-event-placeholder.svg",
+            color: data.color ?? "var(--accent)",
+            cta: data.cta ?? "Learn More",
+            active: data.active ?? index === 0,
+          };
+        }),
+      );
+    });
+  }, []);
+
+  const resolvedEvents =
+  events && events.length > 0
+    ? events
+    : firestoreEvents ?? [];
+  const visibleStackEvents = useMemo(() => resolvedEvents.slice(0, 3), [resolvedEvents]);
+
+  const activeEvent = visibleStackEvents[activeIndex] ?? visibleStackEvents[0];
 
   useEffect(() => {
     const section = sectionRef.current;
 
-    if (!section || prefersReducedMotion || visibleEvents.length === 0) {
+    if (!section || prefersReducedMotion || visibleStackEvents.length === 0) {
       return;
     }
 
@@ -152,10 +149,7 @@ export function FolderStack({ events = HOME_EVENTS, className = "" }: FolderStac
 
       const onUpdate = () => {
         const progress = timeline.scrollTrigger?.progress ?? 0;
-        const nextActiveIndex = Math.min(
-          visibleEvents.length - 1,
-          Math.round(progress * (visibleEvents.length - 1)),
-        );
+        const nextActiveIndex = Math.min(visibleStackEvents.length - 1, Math.round(progress * (visibleStackEvents.length - 1)));
 
         setActiveIndex((currentIndex) => (currentIndex === nextActiveIndex ? currentIndex : nextActiveIndex));
 
@@ -175,17 +169,25 @@ export function FolderStack({ events = HOME_EVENTS, className = "" }: FolderStac
     return () => {
       context.revert();
     };
-  }, [prefersReducedMotion, visibleEvents]);
+  }, [prefersReducedMotion]);
 
-  if (!activeEvent) {
-    return null;
-  }
+  if (firestoreEvents === null && (!events || events.length === 0)) {
+  return (
+    <section className={className}>
+      <Container>
+        <div className="h-[700px] flex items-center justify-center">
+          Loading events...
+        </div>
+      </Container>
+    </section>
+  );
+}
 
   return (
     <section ref={sectionRef} className={className} aria-label="Featured events folder stack">
       <Container>
         <div className="mb-4 flex flex-wrap gap-2 sm:gap-3" role="tablist" aria-label="Featured event folders">
-          {visibleEvents.map((event, index) => {
+          {visibleStackEvents.map((event, index) => {
             const isActive = index === activeIndex;
 
             return (
@@ -223,7 +225,7 @@ export function FolderStack({ events = HOME_EVENTS, className = "" }: FolderStac
       <div className="relative">
         <Container>
           <div className="relative h-[clamp(40rem,78svh,52rem)] overflow-hidden rounded-[2rem] rounded-tl-none border border-[var(--border)] bg-[var(--surface)] p-3 shadow-[var(--shadow-lg)] sm:p-4">
-            {visibleEvents.map((event, index) => (
+            {visibleStackEvents.map((event, index) => (
               <div
                 key={event.tabLabel}
                 ref={(element) => {

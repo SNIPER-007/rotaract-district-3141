@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Cursor } from "@/components/common/cursor";
@@ -14,27 +14,78 @@ import { DonationCard } from "./DonationCard";
 import { DonationModal } from "./DonationModal";
 import { LiveDonationsTable } from "./LiveDonationsTable";
 import { SupportDistrict } from "./SupportDistrict";
-import { PROJECTS, type Project } from "@/data/projects";
-import { LIVE_DONATIONS, type LiveDonationDraft, type LiveDonationEntry } from "@/data/crowdfunding";
+import type { Project } from "@/data/projects";
+import type { LiveDonationDraft, LiveDonationEntry } from "@/data/crowdfunding";
+import { addDoc, collection, db, doc, getDocs, increment, limit, onSnapshot, orderBy, query, updateDoc, where } from "@/lib/firebase/firestore";
 
 export function CrowdfundingPage() {
   const prefersReducedMotion = useReducedMotion();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [liveDonations, setLiveDonations] = useState<readonly LiveDonationEntry[]>(() => [...LIVE_DONATIONS]);
+  const [supportCauseProjects, setSupportCauseProjects] = useState<readonly Project[]>([]);
+  const [fundProjects, setFundProjects] = useState<readonly Project[]>([]);
+  const [liveDonations, setLiveDonations] = useState<readonly LiveDonationEntry[]>([]);
 
-  const handleDonationSubmit = (draft: LiveDonationDraft) => {
-    setLiveDonations((currentDonations) => [
-      {
-        ...draft,
-        id: crypto.randomUUID(),
-        submittedAt: new Date().toISOString(),
-      },
-      ...currentDonations,
-    ]);
+  useEffect(() => {
+    const supportQuery = query(collection(db, "supportCauses"), orderBy("order", "asc"));
+    const fundQuery = query(collection(db, "fundProjects"), orderBy("order", "asc"));
+    const donationsQuery = query(collection(db, "donations"), orderBy("submittedAt", "desc"));
+
+    const unsubscribeSupport = onSnapshot(supportQuery, (snapshot) => {
+      setSupportCauseProjects(
+        snapshot.docs.map((document) => document.data() as Project),
+      );
+    });
+
+    const unsubscribeFund = onSnapshot(fundQuery, (snapshot) => {
+      setFundProjects(
+        snapshot.docs.map((document) => document.data() as Project),
+      );
+    });
+
+    const unsubscribeDonations = onSnapshot(donationsQuery, (snapshot) => {
+      setLiveDonations(
+        snapshot.docs.map((document) => ({ ...(document.data() as Omit<LiveDonationEntry, "id">), id: document.id })),
+      );
+    });
+
+    return () => {
+      unsubscribeSupport();
+      unsubscribeFund();
+      unsubscribeDonations();
+    };
+  }, []);
+
+  const underTenThousandProjects = useMemo(
+    () => supportCauseProjects.filter((project) => project.donationBand === "under-10000"),
+    [supportCauseProjects],
+  );
+  const overTenThousandProjects = useMemo(
+    () => fundProjects.filter((project) => project.donationBand === "over-10000"),
+    [fundProjects],
+  );
+
+  const handleDonationSubmit = async (draft: LiveDonationDraft) => {
+    const submittedAt = new Date().toISOString();
+
+    await addDoc(collection(db, "donations"), {
+      ...draft,
+      paymentStatus: "successful",
+      submittedAt,
+    });
+
+    const sourceCollection = draft.amount >= 10000 ? "fundProjects" : "supportCauses";
+    const matchingProjects = await getDocs(
+      query(collection(db, sourceCollection), where("title", "==", draft.projectTitle), limit(1)),
+    );
+
+    if (!matchingProjects.empty) {
+      const projectDocument = matchingProjects.docs[0];
+
+      await updateDoc(doc(db, sourceCollection, projectDocument.id), {
+        raised: increment(draft.amount),
+      });
+    }
   };
-
-  const underTenThousandProjects = PROJECTS.filter((project) => project.donationBand === "under-10000");
-  const overTenThousandProjects = PROJECTS.filter((project) => project.donationBand === "over-10000");
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
@@ -139,11 +190,11 @@ export function CrowdfundingPage() {
               </p>
             </div>
 
-            {/*<div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               {underTenThousandProjects.map((project) => (
                 <DonationCard key={project.title} project={project} onDonate={setSelectedProject} />
               ))}
-            </div>*/}
+            </div>
           </Container>
         </section>
 
@@ -166,11 +217,11 @@ export function CrowdfundingPage() {
               </p>
             </div>
 
-            {/*<div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               {overTenThousandProjects.map((project) => (
                 <DonationCard key={project.title} project={project} onDonate={setSelectedProject} />
               ))}
-            </div>*/}
+            </div>
           </Container>
         </section>
 
