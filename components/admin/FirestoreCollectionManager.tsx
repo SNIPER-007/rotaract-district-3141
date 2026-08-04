@@ -273,7 +273,7 @@ export function FirestoreCollectionManager({ configs }: FirestoreCollectionManag
 						) : null}
 					</div>
 
-					<div className="max-h-[32rem] space-y-3 overflow-auto pr-1">
+					<div className="space-y-3 pr-1">
 						{documents.map((document) => (
 							<button
 								key={document.id}

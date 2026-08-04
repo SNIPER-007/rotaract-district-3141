@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Cursor } from "@/components/common/cursor";
@@ -54,15 +54,6 @@ export function CrowdfundingPage() {
       unsubscribeDonations();
     };
   }, []);
-
-  const underTenThousandProjects = useMemo(
-    () => supportCauseProjects.filter((project) => project.donationBand === "under-10000"),
-    [supportCauseProjects],
-  );
-  const overTenThousandProjects = useMemo(
-    () => fundProjects.filter((project) => project.donationBand === "over-10000"),
-    [fundProjects],
-  );
 
   const handleDonationSubmit = async (draft: LiveDonationDraft) => {
     const submittedAt = new Date().toISOString();
@@ -191,7 +182,7 @@ export function CrowdfundingPage() {
             </div>
 
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {underTenThousandProjects.map((project) => (
+              {supportCauseProjects.map((project) => (
                 <DonationCard key={project.title} project={project} onDonate={setSelectedProject} />
               ))}
             </div>
@@ -218,7 +209,7 @@ export function CrowdfundingPage() {
             </div>
 
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {overTenThousandProjects.map((project) => (
+              {fundProjects.map((project) => (
                 <DonationCard key={project.title} project={project} onDonate={setSelectedProject} />
               ))}
             </div>

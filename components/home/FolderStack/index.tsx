@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Container } from "@/components/common/container";
 import { createPinnedStoryTimeline, overlapStep } from "@/lib/scroll-story";
 import { collection, onSnapshot, orderBy, query, db } from "@/lib/firebase/firestore";
@@ -50,10 +51,7 @@ export function FolderStack({ events, className = "" }: FolderStackProps) {
     });
   }, []);
 
-  const resolvedEvents =
-  events && events.length > 0
-    ? events
-    : firestoreEvents ?? [];
+  const resolvedEvents = events && events.length > 0 ? events : firestoreEvents ?? [];
   const visibleStackEvents = useMemo(() => resolvedEvents.slice(0, 3), [resolvedEvents]);
 
   const activeEvent = visibleStackEvents[activeIndex] ?? visibleStackEvents[0];
@@ -169,19 +167,19 @@ export function FolderStack({ events, className = "" }: FolderStackProps) {
     return () => {
       context.revert();
     };
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, visibleStackEvents]);
 
-  if (firestoreEvents === null && (!events || events.length === 0)) {
-  return (
-    <section className={className}>
-      <Container>
-        <div className="h-[700px] flex items-center justify-center">
-          Loading events...
-        </div>
-      </Container>
-    </section>
-  );
-}
+  useEffect(() => {
+    if (visibleStackEvents.length === 0) {
+      return;
+    }
+
+    const frame = requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [visibleStackEvents.length]);
 
   return (
     <section ref={sectionRef} className={className} aria-label="Featured events folder stack">

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Container } from "@/components/common/container";
 import { SegmentedToggle } from "@/components/common/segmented-toggle";
 import { EVENT_CATEGORY_OPTIONS, type EventCategory, type EventFolder } from "@/data/events";
@@ -136,7 +137,19 @@ export function FolderStack({ className = "" }: FolderStackProps) {
     }, stackRef);
 
     return () => context.revert();
-  }, [activeIndex, category, prefersReducedMotion]);
+  }, [category, folders, prefersReducedMotion]);
+
+  useEffect(() => {
+    if (folders.length === 0) {
+      return;
+    }
+
+    const frame = requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [folders.length, category]);
 
   if (!activeFolder) {
     return null;
