@@ -3,7 +3,7 @@
 :root,
 html[data-theme="light"] {
   color-scheme: light;
-  --background: #FCF0F4;
+  --background: #f8f7f4;
   --foreground: #111111;
   --surface: #ffffff;
   --surface-muted: #f3eee6;
