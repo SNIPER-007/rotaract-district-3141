@@ -10,7 +10,7 @@ import { isAuthorizedAdminIdentity } from "@/lib/firebase/admin";
 
 const QUICK_LINKS = [
   { label: "Home", href: "/#home" },
-  { label: "About", href: "/#about" },
+  { label: "About", href: "/about" },
   { label: "Leadership", href: "/leadership" },
   { label: "Events", href: "/events" },
   { label: "Crowdfunding", href: "/crowdfunding" },
