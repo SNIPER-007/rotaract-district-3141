@@ -3,13 +3,13 @@
 :root,
 html[data-theme="light"] {
   color-scheme: light;
-  --background: #f8f7f4;
+  --background: #FCF0F4;
   --foreground: #111111;
   --surface: #ffffff;
   --surface-muted: #f3eee6;
   --accent: #DB5079;
   --district-cranberry: #DB5079;
-  --accent-foreground: #ffffff;
+  --accent-foreground: #FCF0F4;
   --secondary: #0143f7;
   --secondary-foreground: #111111;
   --border: rgba(17, 17, 17, 0.08);
